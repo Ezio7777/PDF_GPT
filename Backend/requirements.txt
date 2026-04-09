@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pymongo
+passlib[bcrypt]
+python-jose
+langchain
+langchain-community
+langchain-core
+langchain-text-splitters
+langchain-huggingface
+sentence-transformers
+faiss-cpu
+python-dotenv
+pypdf
+python-multipart
