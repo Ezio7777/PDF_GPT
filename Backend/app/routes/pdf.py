@@ -40,6 +40,8 @@ async def upload_pdf(file: UploadFile = File(...), user_id: str = Depends(verify
         # --- STEP 2: Pass the generated ID to process_pdf ---
         try:
             process_pdf(file_path, chat_id_str)
+            if os.path.exists(file_path):
+                os.remove(file_path)
         except Exception as proc_err:
             logging.error(f"PDF Processing Error: {str(proc_err)}")
             if os.path.exists(file_path):

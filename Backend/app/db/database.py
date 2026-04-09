@@ -21,6 +21,7 @@ try:
     users = db["users"]
     chats = db["chats"]
     messages = db["messages"]
+    vector_col = db["embeddings"]
 
 except Exception as e:
     print(f"MongoDB connection error: {e}")
@@ -28,3 +29,4 @@ except Exception as e:
     users = None
     chats = None
     messages = None
+    vector_col = None
