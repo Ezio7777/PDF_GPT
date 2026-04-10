@@ -1,0 +1,174 @@
+.header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  height:          var(--header-height);
+  padding:         0 16px;
+  background:      var(--bg-secondary);
+  border-bottom:   1px solid var(--border-color);
+  position:        sticky;
+  top:             0;
+  z-index:         100;
+  flex-shrink:     0;
+}
+
+// ─── Left ─────────────────────────────────────────────────────────────────────
+.left {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+}
+
+.sidebarToggle {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           34px;
+  height:          34px;
+  border-radius:   var(--radius-md);
+  color:           var(--text-secondary);
+  transition:      background var(--transition-fast), color var(--transition-fast);
+
+  &:hover {
+    background: var(--bg-hover);
+    color:      var(--text-primary);
+  }
+}
+
+.logo {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+}
+
+.logoIcon {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           32px;
+  height:          32px;
+  background:      var(--primary);
+  border-radius:   var(--radius-md);
+  color:           #fff;
+  flex-shrink:     0;
+}
+
+.logoText {
+  font-size:   16px;
+  font-weight: 700;
+  color:       var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+.logoBy {
+  font-size:  12px;
+  color:      var(--text-muted);
+  padding:    2px 7px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  border:     1px solid var(--border-color);
+}
+
+// ─── Right ────────────────────────────────────────────────────────────────────
+.right {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+}
+
+.themeBtn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           34px;
+  height:          34px;
+  border-radius:   var(--radius-md);
+  color:           var(--text-secondary);
+  transition:      background var(--transition-fast), color var(--transition-fast);
+
+  &:hover {
+    background: var(--bg-hover);
+    color:      var(--text-primary);
+  }
+}
+
+// ─── Avatar ───────────────────────────────────────────────────────────────────
+.avatarWrap { position: relative; }
+
+.avatar {
+  width:           36px;
+  height:          36px;
+  border-radius:   50%;
+  background:      var(--primary);
+  color:           #fff;
+  font-size:       13px;
+  font-weight:     600;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  cursor:          pointer;
+  transition:      opacity var(--transition-fast), box-shadow var(--transition-fast);
+  border:          2px solid transparent;
+  letter-spacing:  0.5px;
+
+  &:hover {
+    opacity:    0.9;
+    box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.2);
+  }
+}
+
+// ─── Dropdown ─────────────────────────────────────────────────────────────────
+.dropdown {
+  position:      absolute;
+  top:           calc(100% + 8px);
+  right:         0;
+  background:    var(--bg-secondary);
+  border:        1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow:    var(--shadow-lg);
+  min-width:     200px;
+  z-index:       200;
+  overflow:      hidden;
+  padding:       6px;
+}
+
+.dropdownUser {
+  padding:      10px 12px 8px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 4px;
+}
+
+.dropdownEmail {
+  font-size: 12px;
+  color:     var(--text-muted);
+  display:   block;
+  overflow:  hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}
+
+.dropdownItem {
+  display:      flex;
+  align-items:  center;
+  gap:          9px;
+  width:        100%;
+  padding:      9px 12px;
+  font-size:    13px;
+  color:        var(--text-primary);
+  border-radius: var(--radius-md);
+  transition:   background var(--transition-fast);
+  text-align:   left;
+
+  &:hover { background: var(--bg-hover); }
+
+  &.danger {
+    color: var(--danger);
+    &:hover { background: var(--danger-light); }
+  }
+}
+
+.divider {
+  height:     1px;
+  background: var(--border-color);
+  margin:     4px 0;
+}
