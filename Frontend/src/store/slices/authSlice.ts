@@ -1,0 +1,52 @@
+import { createSlice} from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+
+interface User {
+  email: string
+}
+
+interface AuthState {
+  token: string | null
+  user: User | null
+  isGuest: boolean
+}
+
+const storedToken = localStorage.getItem('pdf_gpt_token')
+const storedUser  = localStorage.getItem('pdf_gpt_user')
+
+const initialState: AuthState = {
+  token:   storedToken  ?? null,
+  user:    storedUser ? (JSON.parse(storedUser) as User) : null,
+  isGuest: false,
+}
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    loginSuccess(state, action: PayloadAction<{ token: string; user: User }>) {
+      state.token   = action.payload.token
+      state.user    = action.payload.user
+      state.isGuest = false
+      localStorage.setItem('pdf_gpt_token', action.payload.token)
+      localStorage.setItem('pdf_gpt_user',  JSON.stringify(action.payload.user))
+    },
+
+    continueAsGuest(state) {
+      state.token   = null
+      state.user    = null
+      state.isGuest = true
+    },
+
+    logout(state) {
+      state.token   = null
+      state.user    = null
+      state.isGuest = false
+      localStorage.removeItem('pdf_gpt_token')
+      localStorage.removeItem('pdf_gpt_user')
+    },
+  },
+})
+
+export const { loginSuccess, continueAsGuest, logout } = authSlice.actions
+export default authSlice.reducer

@@ -1,0 +1,81 @@
+.btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             8px;
+  border-radius:   var(--radius-md);
+  font-weight:     500;
+  line-height:     1;
+  border:          1px solid transparent;
+  cursor:          pointer;
+  transition:      background-color var(--transition-fast),
+                   border-color     var(--transition-fast),
+                   color            var(--transition-fast),
+                   transform        var(--transition-fast),
+                   box-shadow       var(--transition-fast);
+  white-space: nowrap;
+  user-select: none;
+
+  &:active:not(:disabled) { transform: scale(0.97); }
+  &:disabled { opacity: 0.55; cursor: not-allowed; }
+}
+
+// ─── Variants ────────────────────────────────────────────────────────────────
+.primary {
+  background: var(--primary);
+  color:       #fff;
+  border-color: var(--primary);
+
+  &:hover:not(:disabled) {
+    background:  var(--primary-dark);
+    border-color: var(--primary-dark);
+    box-shadow:  0 0 0 3px rgba(16,163,127,.15);
+  }
+}
+
+.secondary {
+  background:  var(--bg-secondary);
+  color:       var(--text-primary);
+  border-color: var(--border-color);
+
+  &:hover:not(:disabled) {
+    background:  var(--bg-hover);
+    border-color: var(--border-hover);
+  }
+}
+
+.ghost {
+  background:  transparent;
+  color:       var(--text-secondary);
+
+  &:hover:not(:disabled) {
+    background: var(--bg-hover);
+    color:      var(--text-primary);
+  }
+}
+
+.danger {
+  background:  var(--danger);
+  color:       #fff;
+  border-color: var(--danger);
+
+  &:hover:not(:disabled) {
+    background:  #c53030;
+    border-color: #c53030;
+  }
+}
+
+// ─── Sizes ───────────────────────────────────────────────────────────────────
+.sm  { padding: 6px 12px;  font-size: 13px; border-radius: var(--radius-sm); }
+.md  { padding: 9px 18px;  font-size: 14px; }
+.lg  { padding: 12px 24px; font-size: 15px; }
+
+// ─── Modifiers ───────────────────────────────────────────────────────────────
+.fullWidth { width: 100%; }
+.loading   { pointer-events: none; }
+
+.icon {
+  display:     flex;
+  align-items: center;
+  font-size:   16px;
+}

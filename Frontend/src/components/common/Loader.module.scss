@@ -1,0 +1,44 @@
+.wrapper {
+  display:     inline-flex;
+  align-items: center;
+  gap:         8px;
+}
+
+.spinner {
+  display:       inline-block;
+  border:        2px solid transparent;
+  border-radius: 50%;
+  animation:     spin 0.7s linear infinite;
+  flex-shrink:   0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ─── Sizes ───────────────────────────────────────────────────────────────────
+.sm  { width: 14px; height: 14px; border-width: 2px; }
+.md  { width: 20px; height: 20px; border-width: 2px; }
+.lg  { width: 32px; height: 32px; border-width: 3px; }
+
+// ─── Colors ──────────────────────────────────────────────────────────────────
+.primary {
+  border-top-color:   var(--primary);
+  border-right-color: var(--primary);
+}
+
+.inherit {
+  border-top-color:   currentColor;
+  border-right-color: currentColor;
+}
+
+.white {
+  border-top-color:   rgba(255,255,255,0.9);
+  border-right-color: rgba(255,255,255,0.9);
+}
+
+// ─── Label ───────────────────────────────────────────────────────────────────
+.label {
+  font-size: 13px;
+  color:     var(--text-secondary);
+}
