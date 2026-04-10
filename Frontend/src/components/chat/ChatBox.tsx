@@ -4,7 +4,7 @@ import { addMessage, setLoading } from '@/store/slices/chatSlice'
 import chatService from '@/services/chatService'
 import MessageBubble from './MessageBubble'
 import ChatInput from './ChatInput'
-import Loader from '@/components/common/Loader'
+// import Loader from '@/components/common/Loader'
 import styles from './ChatBox.module.scss'
 
 const TypingIndicator: React.FC = () => (

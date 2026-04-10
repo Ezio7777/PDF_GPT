@@ -1,0 +1,219 @@
+.wrapper {
+  flex:            1;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         32px 24px;
+  overflow-y:      auto;
+}
+
+.card {
+  background:    var(--bg-secondary);
+  border:        1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding:       32px;
+  width:         100%;
+  max-width:     520px;
+  box-shadow:    var(--shadow-md);
+  display:       flex;
+  flex-direction: column;
+  gap:           24px;
+}
+
+// ─── Title ────────────────────────────────────────────────────────────────────
+.titleRow {
+  display:     flex;
+  align-items: center;
+  gap:         14px;
+}
+
+.titleIcon {
+  width:           48px;
+  height:          48px;
+  border-radius:   var(--radius-lg);
+  background:      var(--primary-light);
+  color:           var(--primary);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+}
+
+.title {
+  font-size:   20px;
+  font-weight: 700;
+  color:       var(--text-primary);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size:  13px;
+  color:      var(--text-muted);
+  margin-top: 3px;
+}
+
+// ─── Drop Zone ────────────────────────────────────────────────────────────────
+.dropZone {
+  border:        2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  padding:       48px 24px;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  cursor:        pointer;
+  transition:    border-color   var(--transition-fast),
+                 background     var(--transition-fast),
+                 transform      var(--transition-fast);
+  position:      relative;
+  min-height:    200px;
+
+  &:hover:not(.locked):not(.uploading) {
+    border-color: var(--primary);
+    background:   var(--primary-light);
+
+    .uploadIcon { transform: translateY(-4px); }
+  }
+
+  &.dragging {
+    border-color: var(--primary);
+    background:   var(--primary-light);
+    transform:    scale(1.01);
+  }
+
+  &.uploading {
+    cursor:        default;
+    pointer-events: none;
+  }
+
+  &.locked {
+    cursor:  default;
+    opacity: 0.7;
+  }
+}
+
+.hiddenInput { display: none; }
+
+// ─── States ───────────────────────────────────────────────────────────────────
+.idleState,
+.uploadingState,
+.lockedState {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            10px;
+  text-align:     center;
+}
+
+// Idle
+.uploadIcon {
+  width:           64px;
+  height:          64px;
+  border-radius:   50%;
+  background:      var(--bg-tertiary);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  color:           var(--text-muted);
+  margin-bottom:   4px;
+  transition:      transform var(--transition-normal),
+                   background var(--transition-fast),
+                   color      var(--transition-fast);
+
+  &.drag {
+    background: var(--primary-light);
+    color:      var(--primary);
+  }
+}
+
+.dropText {
+  font-size:   15px;
+  font-weight: 500;
+  color:       var(--text-primary);
+}
+
+.orText {
+  font-size: 12px;
+  color:     var(--text-muted);
+}
+
+.browseText {
+  font-size:   13px;
+  font-weight: 500;
+  color:       var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+// Uploading
+.progressRing {
+  position: relative;
+  width:    56px;
+  height:   56px;
+  margin-bottom: 4px;
+}
+
+.progressPct {
+  position:   absolute;
+  inset:      0;
+  display:    flex;
+  align-items: center;
+  justify-content: center;
+  font-size:  12px;
+  font-weight: 600;
+  color:      var(--primary);
+}
+
+.uploadingLabel {
+  font-size:  14px;
+  color:      var(--text-primary);
+  max-width:  260px;
+  overflow:   hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uploadingHint {
+  font-size: 12px;
+  color:     var(--text-muted);
+}
+
+// Locked
+.lockedState {
+  svg    { color: var(--text-muted); opacity: 0.5; margin-bottom: 4px; }
+  p      { font-size: 14px; font-weight: 500; color: var(--text-secondary); }
+  span   { font-size: 12px; color: var(--text-muted); }
+}
+
+// ─── Error ────────────────────────────────────────────────────────────────────
+.error {
+  display:       flex;
+  align-items:   center;
+  gap:           8px;
+  padding:       11px 14px;
+  background:    var(--danger-light);
+  border:        1px solid rgba(229, 62, 62, 0.2);
+  border-radius: var(--radius-md);
+  font-size:     13px;
+  color:         var(--danger);
+
+  svg { flex-shrink: 0; }
+}
+
+// ─── Constraints ──────────────────────────────────────────────────────────────
+.constraints {
+  display:     flex;
+  align-items: center;
+  justify-content: center;
+  gap:         20px;
+  flex-wrap:   wrap;
+
+  span {
+    display:     flex;
+    align-items: center;
+    gap:         5px;
+    font-size:   12px;
+    color:       var(--text-muted);
+
+    svg { color: var(--primary); }
+  }
+}
