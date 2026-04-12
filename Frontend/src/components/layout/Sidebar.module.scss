@@ -1,5 +1,5 @@
 .sidebar {
-  width:          var(--sidebar-width);
+  width:          var(--sidebar-width);     // 260px expanded
   height:         100%;
   background:     var(--bg-secondary);
   border-right:   1px solid var(--border-color);
@@ -7,12 +7,84 @@
   flex-direction: column;
   flex-shrink:    0;
   overflow:       hidden;
-  transition:     width var(--transition-normal);
+  // Smooth collapse animation
+  transition:     width 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  position:       relative;
+  z-index:        50;
+}
+
+// ─── Desktop collapsed: icon-only 60px rail ───────────────────────────────────
+.collapsed {
+  width: 60px;
+
+  .newChat {
+    justify-content: center;
+    padding:         10px;
+    span { display: none; }
+  }
+
+  .sectionLabel,
+  .chatInfo,
+  .deleteBtn,
+  .footerBranding { display: none; }
+
+  .chatItem {
+    justify-content: center;
+    padding:         10px;
+  }
+
+  .chatIcon { margin: 0; }
+
+  .settingsBtn {
+    justify-content: center;
+    span { display: none; }
+  }
+}
+
+// ─── Mobile: hidden off-screen by default, slides in as overlay ───────────────
+@media (max-width: 767px) {
+  .sidebar {
+    position:  fixed;
+    top:       var(--header-height);
+    left:      0;
+    bottom:    0;
+    width:     var(--sidebar-width) !important;   // always full on mobile
+    transform: translateX(-100%);
+    z-index:   300;
+    box-shadow: none;
+  }
+
+  .mobileOpen {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// ─── Mobile backdrop ──────────────────────────────────────────────────────────
+.backdrop {
+  display:    none;
+
+  @media (max-width: 767px) {
+    display:    block;
+    position:   fixed;
+    inset:      0;
+    top:        var(--header-height);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    z-index:    299;
+    animation:  backdropIn 0.2s ease;
+  }
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 // ─── Top ─────────────────────────────────────────────────────────────────────
 .top {
-  padding: 12px 10px 8px;
+  padding:     10px 8px 6px;
   flex-shrink: 0;
 }
 
@@ -21,7 +93,7 @@
   align-items:   center;
   gap:           8px;
   width:         100%;
-  padding:       9px 14px;
+  padding:       9px 12px;
   border-radius: var(--radius-md);
   font-size:     13px;
   font-weight:   500;
@@ -29,31 +101,36 @@
   background:    transparent;
   border:        1px dashed var(--border-color);
   cursor:        pointer;
-  transition:    background var(--transition-fast), border-color var(--transition-fast);
+  transition:    background var(--transition-fast),
+                 border-color var(--transition-fast);
+  white-space:   nowrap;
+  overflow:      hidden;
 
   &:hover {
     background:   var(--bg-hover);
     border-color: var(--border-hover);
   }
 
-  svg { color: var(--primary); }
+  svg { flex-shrink: 0; color: var(--primary); }
 }
 
-// ─── Section Label ────────────────────────────────────────────────────────────
+// ─── Section label ────────────────────────────────────────────────────────────
 .sectionLabel {
-  font-size:     11px;
-  font-weight:   600;
-  color:         var(--text-muted);
+  font-size:      11px;
+  font-weight:    600;
+  color:          var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  padding:       6px 14px 4px;
+  padding:        8px 12px 4px;
+  white-space:    nowrap;
 }
 
 // ─── List ─────────────────────────────────────────────────────────────────────
 .list {
   flex:       1;
   overflow-y: auto;
-  padding:    4px 8px;
+  overflow-x: hidden;
+  padding:    4px 6px;
 }
 
 // ─── Chat Item ────────────────────────────────────────────────────────────────
@@ -67,22 +144,19 @@
   transition:    background var(--transition-fast);
   position:      relative;
   user-select:   none;
+  min-width:     0;
 
   &:hover {
     background: var(--bg-hover);
-
     .deleteBtn { opacity: 1; }
   }
 
   &.active {
     background: var(--primary-light);
-
     .chatIcon { color: var(--primary); }
     .chatTitle { color: var(--primary); font-weight: 500; }
 
-    [data-theme="dark"] & {
-      background: rgba(16, 163, 127, 0.15);
-    }
+    [data-theme="dark"] & { background: rgba(16, 163, 127, 0.15); }
   }
 }
 
@@ -99,6 +173,7 @@
   display:        flex;
   flex-direction: column;
   gap:            2px;
+  overflow:       hidden;
 }
 
 .chatTitle {
@@ -120,21 +195,25 @@
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           26px;
-  height:          26px;
+  width:           24px;
+  height:          24px;
   border-radius:   var(--radius-sm);
   color:           var(--text-muted);
   opacity:         0;
   flex-shrink:     0;
-  transition:      background var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast);
+  transition:      background var(--transition-fast),
+                   color      var(--transition-fast),
+                   opacity    var(--transition-fast);
 
-  &:hover {
-    background: var(--danger-light);
-    color:      var(--danger);
-  }
-
+  &:hover { background: var(--danger-light); color: var(--danger); }
   &:disabled { cursor: not-allowed; }
 }
+
+.spin {
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
 
 // ─── Empty State ──────────────────────────────────────────────────────────────
 .empty {
@@ -142,26 +221,44 @@
   flex-direction: column;
   align-items:    center;
   gap:            6px;
-  padding:        40px 20px;
+  padding:        36px 16px;
   text-align:     center;
   color:          var(--text-muted);
 
-  svg { opacity: 0.4; margin-bottom: 4px; }
-
-  p {
-    font-size:   13px;
-    font-weight: 500;
-    color:       var(--text-secondary);
-  }
-
-  span { font-size: 12px; }
+  svg { opacity: 0.35; margin-bottom: 4px; }
+  p   { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+  span{ font-size: 12px; }
 }
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 .footer {
-  padding:      10px 14px;
-  border-top:   1px solid var(--border-color);
-  flex-shrink:  0;
+  padding:       8px 6px 10px;
+  border-top:    1px solid var(--border-color);
+  flex-shrink:   0;
+  display:       flex;
+  flex-direction: column;
+  gap:           6px;
+}
+
+.settingsBtn {
+  display:       flex;
+  align-items:   center;
+  gap:           9px;
+  width:         100%;
+  padding:       9px 10px;
+  border-radius: var(--radius-md);
+  font-size:     13px;
+  font-weight:   500;
+  color:         var(--text-secondary);
+  background:    transparent;
+  cursor:        pointer;
+  transition:    background var(--transition-fast), color var(--transition-fast);
+  white-space:   nowrap;
+  overflow:      hidden;
+
+  &:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+  svg { flex-shrink: 0; }
 }
 
 .footerBranding {
@@ -169,4 +266,6 @@
   justify-content: space-between;
   font-size:       11px;
   color:           var(--text-muted);
+  padding:         0 4px;
+  white-space:     nowrap;
 }

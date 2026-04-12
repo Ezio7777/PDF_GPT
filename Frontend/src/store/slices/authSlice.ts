@@ -1,13 +1,14 @@
 import { createSlice} from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-interface User {
+export interface User {
   email: string
+  name?: string
 }
 
 interface AuthState {
-  token: string | null
-  user: User | null
+  token:   string | null
+  user:    User | null
   isGuest: boolean
 }
 
@@ -15,7 +16,7 @@ const storedToken = localStorage.getItem('pdf_gpt_token')
 const storedUser  = localStorage.getItem('pdf_gpt_user')
 
 const initialState: AuthState = {
-  token:   storedToken  ?? null,
+  token:   storedToken ?? null,
   user:    storedUser ? (JSON.parse(storedUser) as User) : null,
   isGuest: false,
 }
@@ -32,6 +33,7 @@ const authSlice = createSlice({
       localStorage.setItem('pdf_gpt_user',  JSON.stringify(action.payload.user))
     },
 
+    // continueAsGuest kept for type-safety but UI removed per requirements
     continueAsGuest(state) {
       state.token   = null
       state.user    = null
@@ -39,9 +41,11 @@ const authSlice = createSlice({
     },
 
     logout(state) {
+      // Clear all auth state
       state.token   = null
       state.user    = null
       state.isGuest = false
+      // Clear localStorage completely
       localStorage.removeItem('pdf_gpt_token')
       localStorage.removeItem('pdf_gpt_user')
     },

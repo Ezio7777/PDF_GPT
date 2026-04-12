@@ -7,51 +7,38 @@ import Layout from '@/components/layout/Layout'
 import UploadBox from '@/components/pdf/UploadBox'
 import ChatBox from '@/components/chat/ChatBox'
 import AuthModal from './AuthModal'
-// import Loader from '@/components/common/Loader'
-// import styles from './Home.module.scss'
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch()
-  const { token, isGuest } = useAppSelector(s => s.auth)
-  const { currentChatId }  = useAppSelector(s => s.chat)
-  const { showAuthModal }  = useAppSelector(s => s.ui)
+  const { token } = useAppSelector(s => s.auth)
+  const { currentChatId } = useAppSelector(s => s.chat)
+  const { showAuthModal } = useAppSelector(s => s.ui)
 
-  const isAuthenticated = !!token || isGuest
-
-  // Show auth modal on first visit
+  // Show auth modal when not logged in
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!token) {
       dispatch(openModal())
     }
-  }, [isAuthenticated, dispatch])
+  }, [token, dispatch])
 
-  // Fetch chat list after login
+  // Fetch chat list immediately after login
   useEffect(() => {
     if (!token) return
-
     const fetchChats = async () => {
       try {
         const chats = await chatService.getChatList()
         dispatch(setChats(chats))
-      } catch {
-        // interceptor handles 401
-      }
+      } catch { /* interceptor handles 401 */ }
     }
-
     fetchChats()
   }, [token, dispatch])
 
   return (
     <>
       <Layout>
-        {currentChatId ? (
-          <ChatBox />
-        ) : (
-          <UploadBox />
-        )}
+        {currentChatId ? <ChatBox /> : <UploadBox />}
       </Layout>
 
-      {/* Auth modal */}
       <AuthModal isOpen={showAuthModal} />
     </>
   )

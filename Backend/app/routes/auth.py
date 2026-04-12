@@ -2,6 +2,10 @@ from fastapi import APIRouter, Body, HTTPException, status
 from datetime import datetime
 import logging
 
+from fastapi import Depends
+from bson import ObjectId
+
+from app.core.security import verify_token
 from app.db.database import users
 from app.core.security import hash_password, verify_password, create_token
 
@@ -64,3 +68,73 @@ def login(email: str = Body(...), password: str = Body(...)):
     except Exception as e:
         logging.error(f"Login Error: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error during login")
+    
+
+@router.put("/update-name")
+def update_name(
+    name: str = Body(...),
+    user_id: str = Depends(verify_token)
+):
+    try:
+        if users is None:
+            raise HTTPException(status_code=500, detail="Database connection not available")
+
+        users.update_one(
+            {"_id": ObjectId(user_id)},
+            {"$set": {"name": name}}
+        )
+
+        return {"msg": "Name updated successfully"}
+
+    except Exception as e:
+        logging.error(f"Update Name Error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to update name")
+    
+
+@router.put("/reset-password")
+def reset_password(
+    old_password: str = Body(...),
+    new_password: str = Body(...),
+    user_id: str = Depends(verify_token)
+):
+    try:
+        if users is None:
+            raise HTTPException(status_code=500, detail="Database connection not available")
+
+        user = users.find_one({"_id": ObjectId(user_id)})
+
+        if not user or not verify_password(old_password, user["password"]):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Old password is incorrect"
+            )
+
+        new_hashed = hash_password(new_password)
+
+        users.update_one(
+            {"_id": ObjectId(user_id)},
+            {"$set": {"password": new_hashed}}
+        )
+
+        return {"msg": "Password updated successfully"}
+
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        logging.error(f"Reset Password Error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to reset password")
+    
+
+@router.delete("/delete-account")
+def delete_account(user_id: str = Depends(verify_token)):
+    try:
+        if users is None:
+            raise HTTPException(status_code=500, detail="Database connection not available")
+
+        users.delete_one({"_id": ObjectId(user_id)})
+
+        return {"msg": "Account deleted successfully"}
+
+    except Exception as e:
+        logging.error(f"Delete Account Error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to delete account")

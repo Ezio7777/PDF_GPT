@@ -11,6 +11,7 @@ const Signup: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
+  const [name,     setName]     = useState('')
   const [email,    setEmail]    = useState('')
   const [password, setPassword] = useState('')
   const [confirm,  setConfirm]  = useState('')
@@ -18,6 +19,7 @@ const Signup: React.FC = () => {
   const [loading,  setLoading]  = useState(false)
 
   const validate = (): string | null => {
+    if (!name.trim())                     return 'Full name is required.'
     if (!email.trim())                    return 'Email is required.'
     if (!/\S+@\S+\.\S+/.test(email))     return 'Enter a valid email address.'
     if (!password)                        return 'Password is required.'
@@ -36,9 +38,8 @@ const Signup: React.FC = () => {
     setLoading(true)
     try {
       await authService.signup({ email, password })
-      // Auto-login after successful signup
       const res = await authService.login({ email, password })
-      dispatch(loginSuccess({ token: res.token, user: { email } }))
+      dispatch(loginSuccess({ token: res.token, user: { email, name } }))
       navigate('/', { replace: true })
     } catch (err: unknown) {
       const axiosErr = err as { response?: { data?: { detail?: string; msg?: string } } }
@@ -70,6 +71,23 @@ const Signup: React.FC = () => {
         <p className={styles.subheading}>Start chatting with your documents today</p>
 
         <form onSubmit={handleSubmit} className={styles.form} noValidate>
+          {/* Name field — new, mandatory */}
+          <Input
+            label="Full name"
+            type="text"
+            placeholder="Sunit Pal"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            disabled={loading}
+            autoComplete="name"
+            leftIcon={
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            }
+          />
+
           <Input
             label="Email"
             type="email"
@@ -128,13 +146,7 @@ const Signup: React.FC = () => {
             </div>
           )}
 
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            fullWidth
-            loading={loading}
-          >
+          <Button type="submit" variant="primary" size="lg" fullWidth loading={loading}>
             Create account
           </Button>
         </form>

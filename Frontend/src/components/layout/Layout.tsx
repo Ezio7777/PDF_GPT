@@ -13,6 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Header />
 
       <div className={styles.body}>
+        {/* Sidebar always rendered — CSS controls visibility/width */}
         <Sidebar />
 
         <main className={styles.main}>

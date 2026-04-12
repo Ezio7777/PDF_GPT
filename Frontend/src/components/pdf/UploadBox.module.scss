@@ -72,6 +72,7 @@
     background:   var(--primary-light);
 
     .uploadIcon { transform: translateY(-4px); }
+    .dropText { color: var(--text-muted); }
   }
 
   &.dragging {

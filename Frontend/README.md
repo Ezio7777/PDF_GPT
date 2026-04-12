@@ -1,73 +1,203 @@
-# React + TypeScript + Vite
+# PDF GPT Creator — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **By Sunit Pal** — A production-level React + TypeScript frontend for chatting with PDF documents using AI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+| Layer         | Technology                          |
+|---------------|-------------------------------------|
+| Framework     | React 18 + TypeScript (Vite)        |
+| State         | Redux Toolkit + React-Redux         |
+| Styling       | SCSS Modules + CSS Custom Properties |
+| HTTP Client   | Axios (with JWT interceptor)        |
+| Routing       | React Router DOM v6                 |
+| Build Tool    | Vite 5                              |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+frontend/
+├── public/
+│   └── pdf-icon.svg
+├── src/
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Button.tsx / .module.scss
+│   │   │   ├── Input.tsx  / .module.scss
+│   │   │   ├── Loader.tsx / .module.scss
+│   │   │   └── Modal.tsx  / .module.scss
+│   │   ├── layout/
+│   │   │   ├── Header.tsx  / .module.scss
+│   │   │   ├── Sidebar.tsx / .module.scss
+│   │   │   └── Layout.tsx  / .module.scss
+│   │   ├── chat/
+│   │   │   ├── ChatBox.tsx        / .module.scss
+│   │   │   ├── MessageBubble.tsx  / .module.scss
+│   │   │   └── ChatInput.tsx      / .module.scss
+│   │   └── pdf/
+│   │       └── UploadBox.tsx / .module.scss
+│   ├── pages/
+│   │   ├── Home.tsx      / .module.scss
+│   │   ├── AuthModal.tsx / .module.scss
+│   │   ├── Login.tsx
+│   │   ├── Signup.tsx
+│   │   └── AuthPage.module.scss
+│   ├── services/
+│   │   ├── api.ts           ← Axios instance + JWT interceptor
+│   │   ├── authService.ts
+│   │   ├── chatService.ts
+│   │   └── pdfService.ts
+│   ├── store/
+│   │   ├── store.ts
+│   │   ├── hooks.ts
+│   │   └── slices/
+│   │       ├── authSlice.ts
+│   │       ├── chatSlice.ts
+│   │       └── uiSlice.ts
+│   ├── styles/
+│   │   ├── global.scss
+│   │   └── variables.scss
+│   ├── App.tsx
+│   └── main.tsx
+├── index.html
+├── package.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Quick Start
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Install dependencies
+
+```bash
+npm install
 ```
+
+### 2. Configure environment
+
+```bash
+cp .env.example .env
+# Edit VITE_API_BASE_URL if your backend runs on a different port
+```
+
+### 3. Start the dev server
+
+```bash
+npm run dev
+```
+
+App runs at **http://localhost:5173**
+
+### 4. Build for production
+
+```bash
+npm run build
+npm run preview
+```
+
+---
+
+## API Contract
+
+The frontend talks to a backend at `http://localhost:8000`.
+
+| Method | Endpoint         | Auth     | Description              |
+|--------|------------------|----------|--------------------------|
+| POST   | `/auth/signup`   | No       | Register a new user      |
+| POST   | `/auth/login`    | No       | Get JWT token            |
+| POST   | `/pdf/upload`    | Bearer   | Upload PDF (max 2 MB)    |
+| GET    | `/chat/list`     | Bearer   | List all user chats      |
+| GET    | `/chat/:chatId`  | Bearer   | Get messages in a chat   |
+| POST   | `/chat/ask`      | Bearer   | Ask a question           |
+| DELETE | `/chat/:chatId`  | Bearer   | Delete a chat            |
+
+---
+
+## Features
+
+### Auth System
+- Login / Signup with JWT stored in `localStorage`
+- Auth modal on first visit with Login, Signup, and Guest tabs
+- Token automatically attached to every API request via Axios interceptor
+- 401 responses automatically log the user out and redirect to home
+
+### Chat System
+- Full chat list in sidebar with relative timestamps
+- Select chat → fetch and display messages
+- Animated typing indicator while AI responds
+- Copy any message to clipboard with one click
+- Auto-scroll to latest message on new response
+- Delete chats with a trash button (appears on hover)
+- Auto-resize textarea input (grows up to 180px)
+
+### PDF Upload
+- Drag & drop or click-to-browse
+- Client-side 2 MB validation before uploading
+- SVG circular progress indicator during upload
+- Automatically redirects to the new chat after upload
+
+### UI / UX
+- Dark mode toggle (persisted in `localStorage`)
+- Collapsible sidebar
+- Full SCSS module isolation — no style leakage
+- CSS Custom Properties for instant theme switching
+- Smooth animations: fade-in messages, bounce-in modal, slide-in sidebar
+- Keyboard accessible (Enter to send, Escape to close modal)
+
+---
+
+## Redux State Shape
+
+```ts
+{
+  auth: {
+    token:   string | null,
+    user:    { email: string } | null,
+    isGuest: boolean,
+  },
+  chat: {
+    chats:         Chat[],
+    currentChatId: string | null,
+    messages:      Message[],
+    loading:       boolean,
+  },
+  ui: {
+    darkMode:      boolean,
+    showAuthModal: boolean,
+    sidebarOpen:   boolean,
+  }
+}
+```
+
+---
+
+## Key Design Decisions
+
+- **No prop drilling** — all state via `useAppSelector` / `useAppDispatch`
+- **SCSS Modules** — every component has its own `.module.scss`; no global class collisions
+- **CSS Custom Properties** — theme switching is instant, no re-render needed
+- **Axios interceptor** — JWT header attachment and 401 handling in one place
+- **Guest mode** — users can browse the app without logging in, but PDF upload and asking questions require auth
+- **Auto-login after signup** — smooth onboarding: sign up and land directly in the app
+
+---
+
+## Available Scripts
+
+| Script            | Description                    |
+|-------------------|--------------------------------|
+| `npm run dev`     | Start development server       |
+| `npm run build`   | TypeScript check + Vite build  |
+| `npm run preview` | Preview production build       |
+| `npm run lint`    | ESLint check                   |
+
+---
+
+*PDF GPT Creator — Frontend by Sunit Pal*

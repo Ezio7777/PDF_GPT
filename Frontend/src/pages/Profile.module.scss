@@ -1,0 +1,415 @@
+// ─── Page Wrapper ─────────────────────────────────────────────────────────────
+.page {
+  flex:            1;
+  overflow-y:      auto;
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: center;
+  padding:         32px 20px 48px;
+  background:      var(--bg-primary);
+}
+
+.card {
+  background:     var(--bg-secondary);
+  border:         1px solid var(--border-color);
+  border-radius:  var(--radius-xl);
+  padding:        32px;
+  width:          100%;
+  max-width:      560px;
+  box-shadow:     var(--shadow-md);
+  display:        flex;
+  flex-direction: column;
+  gap:            28px;
+  animation:      bounceIn 0.3s ease forwards;
+}
+
+// ─── Back Button ──────────────────────────────────────────────────────────────
+.backBtn {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+  font-size:   13px;
+  font-weight: 500;
+  color:       var(--text-muted);
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  padding:     4px 0;
+  width:       fit-content;
+  transition:  color var(--transition-fast);
+
+  &:hover { color: var(--text-primary); }
+}
+
+// ─── Avatar Section ───────────────────────────────────────────────────────────
+.avatarSection {
+  display:     flex;
+  align-items: center;
+  gap:         20px;
+}
+
+.avatar {
+  width:           72px;
+  height:          72px;
+  border-radius:   50%;
+  background:      var(--primary);
+  color:           #fff;
+  font-size:       24px;
+  font-weight:     700;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+  letter-spacing:  1px;
+  box-shadow:      0 0 0 4px var(--primary-light);
+}
+
+.identity {
+  display:        flex;
+  flex-direction: column;
+  gap:            4px;
+}
+
+.name {
+  font-size:   20px;
+  font-weight: 700;
+  color:       var(--text-primary);
+  line-height: 1.2;
+}
+
+.email {
+  font-size: 13px;
+  color:     var(--text-muted);
+}
+
+.badge {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           5px;
+  font-size:     11px;
+  font-weight:   500;
+  color:         #166534;
+  background:    #dcfce7;
+  padding:       3px 9px;
+  border-radius: var(--radius-full);
+  width:         fit-content;
+
+  svg { color: #16a34a; }
+
+  [data-theme="dark"] & {
+    background: rgba(22, 163, 74, 0.15);
+    color:      #4ade80;
+    svg { color: #4ade80; }
+  }
+}
+
+// ─── Info Grid ────────────────────────────────────────────────────────────────
+.infoGrid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   12px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.infoCard {
+  background:    var(--bg-tertiary);
+  border:        1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding:       14px 16px;
+  display:       flex;
+  flex-direction: column;
+  gap:           4px;
+}
+
+.infoLabel {
+  font-size:      11px;
+  font-weight:    600;
+  color:          var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.infoValue {
+  font-size:     14px;
+  font-weight:   500;
+  color:         var(--text-primary);
+  word-break:    break-all;
+}
+
+// ─── Section ──────────────────────────────────────────────────────────────────
+.section {
+  display:        flex;
+  flex-direction: column;
+  gap:            10px;
+}
+
+.sectionTitle {
+  font-size:      12px;
+  font-weight:    600;
+  color:          var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding-bottom: 2px;
+  border-bottom:  1px solid var(--border-color);
+}
+
+// ─── Action Cards ─────────────────────────────────────────────────────────────
+.actionCard {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             12px;
+  padding:         14px 16px;
+  background:      var(--bg-tertiary);
+  border:          1px solid var(--border-color);
+  border-radius:   var(--radius-md);
+  transition:      border-color var(--transition-fast),
+                   background   var(--transition-fast);
+
+  &:hover { border-color: var(--border-hover); }
+}
+
+.dangerCard {
+  border-color: rgba(229, 62, 62, 0.15);
+  background:   rgba(229, 62, 62, 0.03);
+
+  &:hover { border-color: rgba(229, 62, 62, 0.3); }
+}
+
+.actionInfo {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+  min-width:   0;
+}
+
+.actionIcon {
+  width:           36px;
+  height:          36px;
+  border-radius:   var(--radius-md);
+  background:      var(--bg-secondary);
+  border:          1px solid var(--border-color);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  color:           var(--text-secondary);
+  flex-shrink:     0;
+}
+
+.dangerIcon {
+  background:   rgba(229, 62, 62, 0.08);
+  border-color: rgba(229, 62, 62, 0.2);
+  color:        var(--danger);
+}
+
+.actionTitle {
+  font-size:   14px;
+  font-weight: 500;
+  color:       var(--text-primary);
+}
+
+.actionDesc {
+  font-size: 12px;
+  color:     var(--text-muted);
+  margin-top: 1px;
+}
+
+// ─── Connect Grid ─────────────────────────────────────────────────────────────
+.connectGrid {
+  display:        flex;
+  flex-direction: column;
+  gap:            10px;
+}
+
+.connectCard {
+  display:         flex;
+  align-items:     center;
+  gap:             14px;
+  padding:         14px 16px;
+  background:      var(--bg-tertiary);
+  border:          1px solid var(--border-color);
+  border-radius:   var(--radius-md);
+  text-decoration: none;
+  transition:      border-color var(--transition-fast),
+                   background   var(--transition-fast),
+                   transform    var(--transition-fast);
+
+  &:hover {
+    border-color: var(--border-hover);
+    background:   var(--bg-hover);
+    transform:    translateY(-1px);
+    text-decoration: none;
+
+    .connectArrow { transform: translateX(3px); }
+  }
+}
+
+.connectIcon {
+  width:           40px;
+  height:          40px;
+  border-radius:   var(--radius-md);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:     0;
+}
+
+.emailIcon {
+  background: #eff6ff;
+  color:      #2563eb;
+
+  [data-theme="dark"] & {
+    background: rgba(37, 99, 235, 0.15);
+    color:      #60a5fa;
+  }
+}
+
+.githubIcon {
+  background: var(--bg-secondary);
+  border:     1px solid var(--border-color);
+  color:      var(--text-primary);
+}
+
+.connectInfo {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+  flex:           1;
+  min-width:      0;
+}
+
+.connectLabel {
+  font-size:   14px;
+  font-weight: 500;
+  color:       var(--text-primary);
+}
+
+.connectSub {
+  font-size: 12px;
+  color:     var(--text-muted);
+}
+
+.connectArrow {
+  color:      var(--text-muted);
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+// ─── Sign Out Row ─────────────────────────────────────────────────────────────
+.signOutRow {
+  display:         flex;
+  justify-content: center;
+  padding-top:     4px;
+  border-top:      1px solid var(--border-color);
+}
+
+// ─── Confirm Dialog ───────────────────────────────────────────────────────────
+.dialogBackdrop {
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  z-index:         500;
+  padding:         16px;
+}
+
+.dialog {
+  background:     var(--bg-secondary);
+  border:         1px solid var(--border-color);
+  border-radius:  var(--radius-xl);
+  padding:        28px 24px;
+  max-width:      360px;
+  width:          100%;
+  box-shadow:     var(--shadow-xl);
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            16px;
+  text-align:     center;
+}
+
+.dialogIcon {
+  width:           48px;
+  height:          48px;
+  border-radius:   50%;
+  background:      #fef3c7;
+  color:           #d97706;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+
+  [data-theme="dark"] & {
+    background: rgba(217, 119, 6, 0.15);
+    color:      #fbbf24;
+  }
+}
+
+.dialogMessage {
+  font-size:   14px;
+  color:       var(--text-secondary);
+  line-height: 1.6;
+}
+
+.dialogActions {
+  display: flex;
+  gap:     10px;
+  width:   100%;
+  justify-content: center;
+}
+
+// ─── Toast ────────────────────────────────────────────────────────────────────
+.toast {
+  position:      fixed;
+  bottom:        28px;
+  left:          50%;
+  transform:     translateX(-50%);
+  display:       flex;
+  align-items:   center;
+  gap:           8px;
+  padding:       12px 20px;
+  border-radius: var(--radius-full);
+  font-size:     13px;
+  font-weight:   500;
+  white-space:   nowrap;
+  box-shadow:    0 8px 24px rgba(0,0,0,0.18);
+  z-index:       600;
+  pointer-events: none;
+}
+
+.toast_success {
+  background: #166534;
+  color:      #fff;
+}
+
+.toast_error {
+  background: var(--danger);
+  color:      #fff;
+}
+
+.toast_info {
+  background: #1f2937;
+  color:      #fff;
+
+  [data-theme="dark"] & {
+    background: #fff;
+    color:      #1f2937;
+  }
+}
+
+// ─── Mobile adjustments ───────────────────────────────────────────────────────
+@media (max-width: 600px) {
+  .card {
+    padding: 20px 16px;
+    gap:     22px;
+  }
+
+  .avatarSection { gap: 14px; }
+  .avatar        { width: 56px; height: 56px; font-size: 18px; }
+  .name          { font-size: 17px; }
+}
