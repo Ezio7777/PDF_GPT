@@ -143,3 +143,21 @@ def delete_account(user_id: str = Depends(verify_token)):
     except Exception as e:
         logging.error(f"Delete Account Error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to delete account")
+    
+
+@router.put("/update-name")
+def update_name(name: str = Body(...), user_id: str = Depends(verify_token)):
+    try:
+        if users is None:
+            raise HTTPException(status_code=500, detail="Database connection not available")
+
+        users.update_one(
+            {"_id": ObjectId(user_id)},
+            {"$set": {"name": name}}
+        )
+
+        return {"msg": "Name updated successfully"}
+
+    except Exception as e:
+        logging.error(f"Update Name Error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to update name")
