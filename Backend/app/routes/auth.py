@@ -12,7 +12,11 @@ from app.core.security import hash_password, verify_password, create_token
 router = APIRouter()
 
 @router.post("/signup")
-def signup(email: str = Body(...), password: str = Body(...)):
+def signup(
+    name: str = Body(...),
+    email: str = Body(...),
+    password: str = Body(...)
+):
     try:
         # 1. Check if database connection is available
         if users is None:
@@ -28,6 +32,7 @@ def signup(email: str = Body(...), password: str = Body(...)):
         # 3. Attempt to hash and insert
         hashed_pwd = hash_password(password)
         users.insert_one({
+            "name": name,
             "email": email,
             "password": hashed_pwd,
             "createdAt": datetime.utcnow()
