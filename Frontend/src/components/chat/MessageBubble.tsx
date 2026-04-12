@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import type { Message } from '@/store/slices/chatSlice'
 import styles from './MessageBubble.module.scss'
 
@@ -15,25 +17,19 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
       await navigator.clipboard.writeText(message.content)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch {
-      // clipboard not available
-    }
+    } catch { /* clipboard not available */ }
   }
 
   const formatTime = (iso: string) => {
     try {
-      return new Date(iso).toLocaleTimeString('en-US', {
-        hour:   '2-digit',
-        minute: '2-digit',
-      })
-    } catch {
-      return ''
-    }
+      return new Date(iso).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+    } catch { return '' }
   }
 
   return (
     <div className={`${styles.row} ${isUser ? styles.userRow : styles.aiRow} fade-in`}>
-      {/* Avatar */}
+
+      {/* AI Avatar */}
       {!isUser && (
         <div className={styles.aiAvatar}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -44,20 +40,44 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
       )}
 
       <div className={styles.bubbleWrap}>
-        {/* Role label */}
-        <span className={styles.roleLabel}>
-          {isUser ? 'You' : 'PDF GPT'}
-        </span>
+        <span className={styles.roleLabel}>{isUser ? 'You' : 'PDF GPT'}</span>
 
-        {/* Bubble */}
         <div className={`${styles.bubble} ${isUser ? styles.userBubble : styles.aiBubble}`}>
-          <p className={styles.content}>{message.content}</p>
+          {isUser ? (
+            // User messages: plain text, preserve line breaks
+            <p className={styles.userContent}>{message.content}</p>
+          ) : (
+            // AI messages: full Markdown rendering
+            <div className={styles.markdownBody}>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  // Code blocks
+                  code({ className, children, ...props }) {
+                    const isBlock = className?.startsWith('language-')
+                    return isBlock ? (
+                      <pre className={styles.codeBlock}>
+                        <code className={className} {...props}>{children}</code>
+                      </pre>
+                    ) : (
+                      <code className={styles.inlineCode} {...props}>{children}</code>
+                    )
+                  },
+                  // Links open in new tab
+                  a({ href, children }) {
+                    return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
+                  },
+                }}
+              >
+                {message.content}
+              </ReactMarkdown>
+            </div>
+          )}
         </div>
 
-        {/* Footer: time + copy */}
+        {/* Footer */}
         <div className={`${styles.footer} ${isUser ? styles.userFooter : ''}`}>
           <span className={styles.time}>{formatTime(message.timestamp)}</span>
-
           <button
             className={`${styles.copyBtn} ${copied ? styles.copied : ''}`}
             onClick={handleCopy}
@@ -84,7 +104,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         </div>
       </div>
 
-      {/* User avatar */}
+      {/* User Avatar */}
       {isUser && (
         <div className={styles.userAvatar}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

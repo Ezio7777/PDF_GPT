@@ -101,3 +101,83 @@
     &:hover { text-decoration: underline; }
   }
 }
+
+
+// ─── Google Button ────────────────────────────────────────────────────────────
+.googleBtn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             10px;
+  width:           100%;
+  padding:         11px 16px;
+  border:          1px solid var(--border-color);
+  border-radius:   var(--radius-md);
+  background:      var(--bg-secondary);
+  color:           var(--text-primary);
+  font-size:       14px;
+  font-weight:     500;
+  cursor:          pointer;
+  transition:      background var(--transition-fast),
+                   border-color var(--transition-fast),
+                   box-shadow   var(--transition-fast);
+  font-family:     inherit;
+  margin-top:      4px;
+
+  &:hover {
+    background:   var(--bg-hover);
+    border-color: var(--border-hover);
+    box-shadow:   var(--shadow-sm);
+  }
+
+  &:active { transform: scale(0.98); }
+}
+
+// ─── Divider ──────────────────────────────────────────────────────────────────
+.divider {
+  position:   relative;
+  text-align: center;
+  margin:     4px 0;
+
+  &::before {
+    content:    '';
+    position:   absolute;
+    top:        50%;
+    left:       0;
+    right:      0;
+    height:     1px;
+    background: var(--border-color);
+  }
+
+  span {
+    position:   relative;
+    background: var(--bg-secondary);
+    padding:    0 12px;
+    font-size:  12px;
+    color:      var(--text-muted);
+  }
+}
+
+// ─── Toast ────────────────────────────────────────────────────────────────────
+.toast {
+  position:       fixed;
+  bottom:         28px;
+  left:           50%;
+  transform:      translateX(-50%);
+  display:        flex;
+  align-items:    center;
+  gap:            8px;
+  padding:        12px 20px;
+  background:     #1f2937;
+  color:          #fff;
+  border-radius:  var(--radius-full);
+  font-size:      13px;
+  font-weight:    500;
+  white-space:    nowrap;
+  box-shadow:     0 8px 24px rgba(0,0,0,0.2);
+  z-index:        2000;
+  pointer-events: none;
+  animation:      fadeIn 0.25s ease;
+
+  [data-theme="dark"] & { background: #fff; color: #1f2937; }
+}

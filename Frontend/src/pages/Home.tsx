@@ -1,27 +1,26 @@
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setChats } from '@/store/slices/chatSlice'
-import { openModal } from '@/store/slices/uiSlice'
 import chatService from '@/services/chatService'
 import Layout from '@/components/layout/Layout'
 import UploadBox from '@/components/pdf/UploadBox'
 import ChatBox from '@/components/chat/ChatBox'
-import AuthModal from './AuthModal'
 
 const Home: React.FC = () => {
-  const dispatch = useAppDispatch()
+  const dispatch  = useAppDispatch()
+  const navigate  = useNavigate()
   const { token } = useAppSelector(s => s.auth)
   const { currentChatId } = useAppSelector(s => s.chat)
-  const { showAuthModal } = useAppSelector(s => s.ui)
 
-  // Show auth modal when not logged in
+  // If not logged in → go to the dedicated login page (no modal overlap)
   useEffect(() => {
     if (!token) {
-      dispatch(openModal())
+      navigate('/login', { replace: true })
     }
-  }, [token, dispatch])
+  }, [token, navigate])
 
-  // Fetch chat list immediately after login
+  // Fetch chat list as soon as we have a token
   useEffect(() => {
     if (!token) return
     const fetchChats = async () => {
@@ -33,14 +32,13 @@ const Home: React.FC = () => {
     fetchChats()
   }, [token, dispatch])
 
-  return (
-    <>
-      <Layout>
-        {currentChatId ? <ChatBox /> : <UploadBox />}
-      </Layout>
+  // Don't render layout until we're authenticated
+  if (!token) return null
 
-      <AuthModal isOpen={showAuthModal} />
-    </>
+  return (
+    <Layout>
+      {currentChatId ? <ChatBox /> : <UploadBox />}
+    </Layout>
   )
 }
 

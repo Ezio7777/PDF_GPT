@@ -49,8 +49,16 @@ const authSlice = createSlice({
       localStorage.removeItem('pdf_gpt_token')
       localStorage.removeItem('pdf_gpt_user')
     },
+
+    // Sync name change to Redux + localStorage after successful API call
+    updateUserName(state, action: PayloadAction<string>) {
+      if (state.user) {
+        state.user.name = action.payload
+        localStorage.setItem('pdf_gpt_user', JSON.stringify(state.user))
+      }
+    },
   },
 })
 
-export const { loginSuccess, continueAsGuest, logout } = authSlice.actions
+export const { loginSuccess, continueAsGuest, logout, updateUserName } = authSlice.actions
 export default authSlice.reducer
