@@ -34,10 +34,9 @@ const Signup: React.FC = () => {
 
     const err = validate()
     if (err) { setError(err); return }
-
     setLoading(true)
     try {
-      await authService.signup({ email, password })
+      await authService.signup({name, email, password })
       const res = await authService.login({ email, password })
       dispatch(loginSuccess({ token: res.token, user: { email, name } }))
       navigate('/', { replace: true })

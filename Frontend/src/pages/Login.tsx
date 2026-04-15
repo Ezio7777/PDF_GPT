@@ -32,7 +32,10 @@ const Login: React.FC = () => {
     setLoading(true)
     try {
       const res = await authService.login({ email, password })
-      dispatch(loginSuccess({ token: res.token, user: { email } }))
+      dispatch(loginSuccess({
+        token: res.token,
+        user: res.user
+      }))
       navigate('/', { replace: true })
     } catch (err: unknown) {
       const axiosErr = err as { response?: { data?: { detail?: string } } }

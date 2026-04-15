@@ -70,11 +70,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen }) => {
     try {
       if (tab === 'login') {
         const res = await authService.login({ email, password })
-        dispatch(loginSuccess({ token: res.token, user: { email } }))
+        dispatch(loginSuccess({
+          token: res.token,
+          user: res.user
+        }))
         dispatch(closeModal())
         reset()
       } else {
-        await authService.signup({ email, password })
+        await authService.signup({ name, email, password })
         setSuccess('Account created! Logging you in…')
         const res = await authService.login({ email, password })
         dispatch(loginSuccess({ token: res.token, user: { email, name } }))

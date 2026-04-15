@@ -2,7 +2,13 @@ import api from './api'
 
 export interface LoginPayload    { email: string; password: string }
 export interface SignupPayload   { email: string; password: string; name: string }
-export interface LoginResponse   { token: string }
+export interface LoginResponse {
+  token: string
+  user: {
+    email: string
+    name?: string
+  }
+}
 export interface SignupResponse  { msg: string }
 export interface UpdateNamePayload { name: string }
 export interface ResetPasswordPayload { oldPassword: string; newPassword: string }

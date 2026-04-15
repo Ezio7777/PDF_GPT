@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Body, HTTPException, status
 from datetime import datetime
 import logging
@@ -8,6 +9,8 @@ from bson import ObjectId
 from app.core.security import verify_token
 from app.db.database import users
 from app.core.security import hash_password, verify_password, create_token
+from app.db.database import chats, messages, vector_col
+from pydantic import BaseModel
 
 router = APIRouter()
 
@@ -66,7 +69,13 @@ def login(email: str = Body(...), password: str = Body(...)):
         # 3. Create Token
         token = create_token(str(user["_id"]))
 
-        return {"token": token}
+        return {
+            "token": token,
+            "user": {
+                "email": user["email"],
+                "name": user.get("name", "")
+            }
+        }
 
     except HTTPException as e:
         raise e
@@ -77,7 +86,7 @@ def login(email: str = Body(...), password: str = Body(...)):
 
 @router.put("/update-name")
 def update_name(
-    name: str = Body(...),
+    name: str = Body(..., embed=True),
     user_id: str = Depends(verify_token)
 ):
     try:
@@ -95,26 +104,23 @@ def update_name(
         logging.error(f"Update Name Error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to update name")
     
+class ResetPasswordSchema(BaseModel):
+    oldPassword: str
+    newPassword: str
+
 
 @router.put("/reset-password")
 def reset_password(
-    old_password: str = Body(...),
-    new_password: str = Body(...),
+    data: ResetPasswordSchema,
     user_id: str = Depends(verify_token)
 ):
     try:
-        if users is None:
-            raise HTTPException(status_code=500, detail="Database connection not available")
-
         user = users.find_one({"_id": ObjectId(user_id)})
 
-        if not user or not verify_password(old_password, user["password"]):
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Old password is incorrect"
-            )
+        if not user or not verify_password(data.oldPassword, user["password"]):
+            raise HTTPException(status_code=401, detail="Old password is incorrect")
 
-        new_hashed = hash_password(new_password)
+        new_hashed = hash_password(data.newPassword)
 
         users.update_one(
             {"_id": ObjectId(user_id)},
@@ -123,41 +129,41 @@ def reset_password(
 
         return {"msg": "Password updated successfully"}
 
-    except HTTPException as e:
-        raise e
     except Exception as e:
-        logging.error(f"Reset Password Error: {str(e)}")
+        logging.error(str(e))
         raise HTTPException(status_code=500, detail="Failed to reset password")
     
 
 @router.delete("/delete-account")
 def delete_account(user_id: str = Depends(verify_token)):
     try:
-        if users is None:
-            raise HTTPException(status_code=500, detail="Database connection not available")
+        user_obj_id = ObjectId(user_id)
 
-        users.delete_one({"_id": ObjectId(user_id)})
+        # 1. Get all user chats
+        user_chats = list(chats.find({"userId": user_id}))
 
-        return {"msg": "Account deleted successfully"}
+        chat_ids = [str(chat["_id"]) for chat in user_chats]
+
+        # 2. Delete messages
+        messages.delete_many({"chatId": {"$in": chat_ids}})
+
+        # 3. Delete embeddings (vector DB)
+        vector_col.delete_many({"chatId": {"$in": chat_ids}})
+
+        # 4. Delete uploaded PDF files
+        for chat in user_chats:
+            file_path = chat.get("filePath")
+            if file_path and os.path.exists(file_path):
+                os.remove(file_path)
+
+        # 5. Delete chats
+        chats.delete_many({"userId": user_id})
+
+        # 6. Delete user
+        users.delete_one({"_id": user_obj_id})
+
+        return {"msg": "Account and all data deleted successfully"}
 
     except Exception as e:
         logging.error(f"Delete Account Error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to delete account")
-    
-
-@router.put("/update-name")
-def update_name(name: str = Body(...), user_id: str = Depends(verify_token)):
-    try:
-        if users is None:
-            raise HTTPException(status_code=500, detail="Database connection not available")
-
-        users.update_one(
-            {"_id": ObjectId(user_id)},
-            {"$set": {"name": name}}
-        )
-
-        return {"msg": "Name updated successfully"}
-
-    except Exception as e:
-        logging.error(f"Update Name Error: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to update name")
