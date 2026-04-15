@@ -36,11 +36,22 @@ const Header: React.FC = () => {
     else dispatch(toggleSidebarCollapse())
   }
 
-  const initials = user?.name
-    ? user.name.slice(0, 2).toUpperCase()
-    : user?.email
-      ? user.email.slice(0, 2).toUpperCase()
-      : 'SP'
+  const getInitials = (name?: string, email?: string) => {
+    if (name && name.trim().length > 0) {
+      const parts = name.trim().split(' ')
+      return parts.length >= 2
+        ? (parts[0][0] + parts[1][0]).toUpperCase()
+        : parts[0][0].toUpperCase()
+    }
+
+    if (email) {
+      return email.slice(0, 2).toUpperCase()
+    }
+
+    return 'U'
+  }
+
+  const initials = getInitials(user?.name, user?.email)
 
   return (
     <header className={styles.header}>
