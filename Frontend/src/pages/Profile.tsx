@@ -4,9 +4,9 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logout, updateUserName } from '@/store/slices/authSlice'
 import { clearChat } from '@/store/slices/chatSlice'
 import authService from '@/services/authService'
-import Layout from '@/components/layout/Layout'
 import Button from '@/components/common/Button'
 import styles from './Profile.module.scss'
+import ProfileLayout from '@/components/layout/ProfileLayout'
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
 type ToastType = 'success' | 'error' | 'info'
@@ -78,8 +78,8 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({ onClose, onSucc
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmNew,  setConfirmNew]  = useState('')
-  const [loading,     setLoading]     = useState(false)
-  const [error,       setError]       = useState<string | null>(null)
+  const [loading,      setLoading]      = useState(false)
+  const [error,        setError]        = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -122,7 +122,6 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({ onClose, onSucc
         </div>
 
         <form onSubmit={handleSubmit} className={styles.passwordForm} noValidate>
-          {/* Current password */}
           <div className={styles.formField}>
             <label className={styles.formLabel}>Current password</label>
             <div className={styles.formInputWrap}>
@@ -141,7 +140,6 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({ onClose, onSucc
             </div>
           </div>
 
-          {/* New password */}
           <div className={styles.formField}>
             <label className={styles.formLabel}>New password</label>
             <div className={styles.formInputWrap}>
@@ -160,7 +158,6 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({ onClose, onSucc
             </div>
           </div>
 
-          {/* Confirm new password */}
           <div className={styles.formField}>
             <label className={styles.formLabel}>Confirm new password</label>
             <div className={styles.formInputWrap}>
@@ -204,18 +201,16 @@ const Profile: React.FC = () => {
   const navigate = useNavigate()
   const { user } = useAppSelector(s => s.auth)
 
-  // ── Name edit state ──────────────────────────────────────────────────────────
   const [isEditingName, setIsEditingName] = useState(false)
-  const [nameValue,     setNameValue]     = useState(user?.name ?? '')
+  const [nameValue,      setNameValue]     = useState(user?.name ?? '')
   const [nameSaving,    setNameSaving]    = useState(false)
   const nameInputRef = useRef<HTMLInputElement>(null)
 
-  // ── Dialog / modal state ────────────────────────────────────────────────────
-  const [dialog,         setDialog]         = useState<null | 'delete'>(null)
+  // FIX 2: Added 'logout' to dialog state
+  const [dialog,          setDialog]          = useState<null | 'delete' | 'logout'>(null)
   const [showResetModal, setShowResetModal]  = useState(false)
   const [deletingAccount, setDeletingAccount] = useState(false)
 
-  // ── Toast ───────────────────────────────────────────────────────────────────
   const [toast, setToast] = useState<null | { message: string; type: ToastType }>(null)
 
   const showToast = (message: string, type: ToastType = 'info') => {
@@ -223,12 +218,10 @@ const Profile: React.FC = () => {
     setTimeout(() => setToast(null), 3500)
   }
 
-  // Focus input when editing starts
   useEffect(() => {
     if (isEditingName) nameInputRef.current?.focus()
   }, [isEditingName])
 
-  // ── Handlers ─────────────────────────────────────────────────────────────────
   const handleStartEditName = () => {
     setNameValue(user?.name ?? '')
     setIsEditingName(true)
@@ -241,14 +234,12 @@ const Profile: React.FC = () => {
 
   const handleSaveName = async () => {
     const trimmed = nameValue.trim()
-    if (!trimmed)            { showToast('Name cannot be empty.', 'error'); return }
+    if (!trimmed)             { showToast('Name cannot be empty.', 'error'); return }
     if (trimmed === user?.name) { setIsEditingName(false); return }
 
     setNameSaving(true)
     try {
-      // Call PUT /auth/update-name
       await authService.updateName({ name: trimmed })
-      // Sync to Redux + localStorage
       dispatch(updateUserName(trimmed))
       setIsEditingName(false)
       showToast('Name updated successfully!', 'success')
@@ -269,7 +260,7 @@ const Profile: React.FC = () => {
     setDeletingAccount(true)
     try {
       await authService.deleteAccount()
-    } catch { /* ignore — always clear locally */ } finally {
+    } catch { /* ignore */ } finally {
       setDeletingAccount(false)
       setDialog(null)
       dispatch(logout())
@@ -284,7 +275,6 @@ const Profile: React.FC = () => {
     navigate('/login', { replace: true })
   }
 
-  // ── Derived values ───────────────────────────────────────────────────────────
   const displayName = user?.name ?? 'User'
   const initials    = displayName
     .split(' ')
@@ -294,11 +284,10 @@ const Profile: React.FC = () => {
     .slice(0, 2)
 
   return (
-    <Layout>
+    <ProfileLayout>
       <div className={styles.page}>
         <div className={styles.card}>
 
-          {/* ── Back ── */}
           <button className={styles.backBtn} onClick={() => navigate(-1)}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <polyline points="15 18 9 12 15 6" />
@@ -306,11 +295,9 @@ const Profile: React.FC = () => {
             Back
           </button>
 
-          {/* ── Avatar + identity ── */}
           <div className={styles.avatarSection}>
             <div className={styles.avatar}>{initials}</div>
             <div className={styles.identity}>
-              {/* Name row with inline edit */}
               <div className={styles.nameRow}>
                 {isEditingName ? (
                   <div className={styles.nameEditWrap}>
@@ -324,13 +311,7 @@ const Profile: React.FC = () => {
                       maxLength={60}
                       aria-label="Edit name"
                     />
-                    <button
-                      className={styles.nameSaveBtn}
-                      onClick={handleSaveName}
-                      disabled={nameSaving}
-                      aria-label="Save name"
-                      title="Save"
-                    >
+                    <button className={styles.nameSaveBtn} onClick={handleSaveName} disabled={nameSaving} title="Save">
                       {nameSaving ? (
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{ animation: 'spin 0.7s linear infinite' }}>
                           <path d="M21 12a9 9 0 1 1-6.219-8.56" />
@@ -341,13 +322,7 @@ const Profile: React.FC = () => {
                         </svg>
                       )}
                     </button>
-                    <button
-                      className={styles.nameCancelBtn}
-                      onClick={handleCancelEditName}
-                      disabled={nameSaving}
-                      aria-label="Cancel"
-                      title="Cancel"
-                    >
+                    <button className={styles.nameCancelBtn} onClick={handleCancelEditName} disabled={nameSaving} title="Cancel">
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                         <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
                       </svg>
@@ -356,13 +331,7 @@ const Profile: React.FC = () => {
                 ) : (
                   <>
                     <h1 className={styles.name}>{displayName}</h1>
-                    {/* ✏️ Pencil edit icon */}
-                    <button
-                      className={styles.nameEditBtn}
-                      onClick={handleStartEditName}
-                      aria-label="Edit name"
-                      title="Edit name"
-                    >
+                    <button className={styles.nameEditBtn} onClick={handleStartEditName} aria-label="Edit name" title="Edit name">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
@@ -371,9 +340,7 @@ const Profile: React.FC = () => {
                   </>
                 )}
               </div>
-
               <p className={styles.email}>{user?.email ?? '—'}</p>
-
               <span className={styles.badge}>
                 <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor">
                   <circle cx="12" cy="12" r="10" />
@@ -383,7 +350,6 @@ const Profile: React.FC = () => {
             </div>
           </div>
 
-          {/* ── Info grid ── */}
           <div className={styles.infoGrid}>
             <div className={styles.infoCard}>
               <span className={styles.infoLabel}>Full name</span>
@@ -405,11 +371,8 @@ const Profile: React.FC = () => {
             </div>
           </div>
 
-          {/* ── Account actions ── */}
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Account</h2>
-
-            {/* Reset password — opens inline modal */}
             <div className={styles.actionCard}>
               <div className={styles.actionInfo}>
                 <div className={styles.actionIcon}>
@@ -428,7 +391,6 @@ const Profile: React.FC = () => {
               </Button>
             </div>
 
-            {/* Delete account */}
             <div className={`${styles.actionCard} ${styles.dangerCard}`}>
               <div className={styles.actionInfo}>
                 <div className={`${styles.actionIcon} ${styles.dangerIcon}`}>
@@ -449,20 +411,18 @@ const Profile: React.FC = () => {
             </div>
           </div>
 
-
-          {/* ── Subscription link ── */}
-          <div className={styles.section}>
+          <div className={styles.planSection}>
             <h2 className={styles.sectionTitle}>Plan</h2>
-            <div className={styles.actionCard} style={{ cursor: 'pointer' }} onClick={() => navigate('/subscription')}>
-              <div className={styles.actionInfo}>
-                <div className={styles.actionIcon}>
+            <div className={styles.planCard} onClick={() => navigate('/subscription')}>
+              <div className={styles.planInfo}>
+                <div className={styles.planIcon}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
                   </svg>
                 </div>
                 <div>
-                  <p className={styles.actionTitle}>Subscription</p>
-                  <p className={styles.actionDesc}>View and manage your current plan</p>
+                  <p className={styles.planTitle}>Subscription</p>
+                  <p className={styles.planDesc}>View and manage your current plan</p>
                 </div>
               </div>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -471,11 +431,9 @@ const Profile: React.FC = () => {
             </div>
           </div>
 
-          {/* ── Connect with us ── */}
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Connect with us</h2>
             <div className={styles.connectGrid}>
-
               <a href="mailto:sunitpal@example.com" className={styles.connectCard} target="_blank" rel="noopener noreferrer">
                 <div className={`${styles.connectIcon} ${styles.emailIcon}`}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -484,11 +442,11 @@ const Profile: React.FC = () => {
                   </svg>
                 </div>
                 <div className={styles.connectInfo}>
-                  <span className={styles.connectLabel}>Email us</span>
-                  <span className={styles.connectSub}>sunitpal@example.com</span>
+                  <span className={styles.connectLabel}>Email</span>
+                  <span className={styles.connectSub}>Contact us</span>
                 </div>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className={styles.connectArrow}>
-                  <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                  <polyline points="9 18 15 12 9 6" />
                 </svg>
               </a>
 
@@ -503,11 +461,10 @@ const Profile: React.FC = () => {
                   <span className={styles.connectSub}>@sunitpal</span>
                 </div>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className={styles.connectArrow}>
-                  <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                  <polyline points="9 18 15 12 9 6" />
                 </svg>
               </a>
 
-              {/* LinkedIn */}
               <a href="https://linkedin.com/in/sunitpal" className={styles.connectCard} target="_blank" rel="noopener noreferrer">
                 <div className={`${styles.connectIcon} ${styles.linkedinIcon}`}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -519,35 +476,29 @@ const Profile: React.FC = () => {
                   <span className={styles.connectSub}>Sunit Pal</span>
                 </div>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className={styles.connectArrow}>
-                  <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                  <polyline points="9 18 15 12 9 6" />
                 </svg>
               </a>
-
             </div>
           </div>
 
-          {/* ── Sign out ── */}
-          <div className={styles.signOutRow}>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleSignOut}
-              icon={
+          <div className={styles.signOutContainer}>
+            {/* FIX 2: Entire card triggers the logout confirmation dialog */}
+            <div className={styles.signOutCard} onClick={() => setDialog('logout')}>
+              <button className={styles.signOutBtn}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                   <polyline points="16 17 21 12 16 7" />
                   <line x1="21" y1="12" x2="9" y2="12" />
                 </svg>
-              }
-            >
-              Sign out
-            </Button>
+                Sign out
+              </button>
+            </div>
           </div>
 
         </div>
       </div>
 
-      {/* ── Reset Password Modal ── */}
       {showResetModal && (
         <ResetPasswordModal
           onClose={() => setShowResetModal(false)}
@@ -556,7 +507,6 @@ const Profile: React.FC = () => {
         />
       )}
 
-      {/* ── Delete Account Confirm ── */}
       {dialog === 'delete' && (
         <ConfirmDialog
           title="Delete account"
@@ -568,9 +518,18 @@ const Profile: React.FC = () => {
         />
       )}
 
-      {/* ── Toast ── */}
+      {/* FIX 2: Logout confirmation modal */}
+      {dialog === 'logout' && (
+        <ConfirmDialog
+          title="Sign out"
+          message="Are you sure you want to sign out of your account?"
+          onConfirm={handleSignOut}
+          onCancel={() => setDialog(null)}
+        />
+      )}
+
       {toast && <Toast message={toast.message} type={toast.type} />}
-    </Layout>
+    </ProfileLayout>
   )
 }
 

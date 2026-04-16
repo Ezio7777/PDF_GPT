@@ -2,25 +2,25 @@
 .page {
   flex:            1;
   overflow-y:      auto;
-  display:         flex;
-  align-items:     flex-start;
+  display:          flex;
+  align-items:      flex-start;
   justify-content: center;
-  padding:         32px 20px 48px;
+  padding:          32px 20px 48px;
   background:      var(--bg-primary);
 }
 
 .card {
   background:     var(--bg-secondary);
-  border:         1px solid var(--border-color);
+  border:          1px solid var(--border-color);
   border-radius:  var(--radius-xl);
-  padding:        32px;
-  width:          100%;
-  max-width:      560px;
-  box-shadow:     var(--shadow-md);
-  display:        flex;
+  padding:         32px;
+  width:           100%;
+  max-width:       560px;
+  box-shadow:      var(--shadow-md);
+  display:         flex;
   flex-direction: column;
-  gap:            28px;
-  animation:      bounceIn 0.3s ease forwards;
+  gap:             28px;
+  animation:       bounceIn 0.3s ease forwards;
 }
 
 // ─── Back Button ──────────────────────────────────────────────────────────────
@@ -65,9 +65,9 @@
 }
 
 .identity {
-  display:        flex;
+  display:         flex;
   flex-direction: column;
-  gap:            4px;
+  gap:             4px;
 }
 
 .name {
@@ -83,16 +83,16 @@
 }
 
 .badge {
-  display:       inline-flex;
-  align-items:   center;
-  gap:           5px;
-  font-size:     11px;
-  font-weight:   500;
-  color:         #166534;
-  background:    #dcfce7;
-  padding:       3px 9px;
+  display:        inline-flex;
+  align-items:    center;
+  gap:            5px;
+  font-size:      11px;
+  font-weight:    500;
+  color:          #166534;
+  background:     #dcfce7;
+  padding:        3px 9px;
   border-radius: var(--radius-full);
-  width:         fit-content;
+  width:          fit-content;
 
   svg { color: #16a34a; }
 
@@ -105,9 +105,9 @@
 
 // ─── Info Grid ────────────────────────────────────────────────────────────────
 .infoGrid {
-  display:               grid;
+  display:                grid;
   grid-template-columns: 1fr 1fr;
-  gap:                   12px;
+  gap:                    12px;
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
@@ -116,12 +116,12 @@
 
 .infoCard {
   background:    var(--bg-tertiary);
-  border:        1px solid var(--border-color);
+  border:         1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding:       14px 16px;
-  display:       flex;
+  padding:        14px 16px;
+  display:        flex;
   flex-direction: column;
-  gap:           4px;
+  gap:            4px;
 }
 
 .infoLabel {
@@ -133,17 +133,17 @@
 }
 
 .infoValue {
-  font-size:     14px;
-  font-weight:   500;
-  color:         var(--text-primary);
-  word-break:    break-all;
+  font-size:      14px;
+  font-weight:    500;
+  color:          var(--text-primary);
+  word-break:     break-all;
 }
 
-// ─── Section ──────────────────────────────────────────────────────────────────
+// ─── Sections ─────────────────────────────────────────────────────────────────
 .section {
-  display:        flex;
+  display:         flex;
   flex-direction: column;
-  gap:            10px;
+  gap:             10px;
 }
 
 .sectionTitle {
@@ -156,18 +156,17 @@
   border-bottom:  1px solid var(--border-color);
 }
 
-// ─── Action Cards ─────────────────────────────────────────────────────────────
+// ─── Account Action Cards ─────────────────────────────────────────────────────
 .actionCard {
   display:         flex;
   align-items:     center;
   justify-content: space-between;
-  gap:             12px;
-  padding:         14px 16px;
+  gap:              12px;
+  padding:          14px 16px;
   background:      var(--bg-tertiary);
   border:          1px solid var(--border-color);
   border-radius:   var(--radius-md);
-  transition:      border-color var(--transition-fast),
-                   background   var(--transition-fast);
+  transition:      border-color var(--transition-fast);
 
   &:hover { border-color: var(--border-hover); }
 }
@@ -175,7 +174,6 @@
 .dangerCard {
   border-color: rgba(229, 62, 62, 0.15);
   background:   rgba(229, 62, 62, 0.03);
-
   &:hover { border-color: rgba(229, 62, 62, 0.3); }
 }
 
@@ -187,16 +185,16 @@
 }
 
 .actionIcon {
-  width:           36px;
-  height:          36px;
+  width:            36px;
+  height:           36px;
   border-radius:   var(--radius-md);
   background:      var(--bg-secondary);
   border:          1px solid var(--border-color);
-  display:         flex;
+  display:          flex;
   align-items:     center;
   justify-content: center;
-  color:           var(--text-secondary);
-  flex-shrink:     0;
+  color:            var(--text-secondary);
+  flex-shrink:      0;
 }
 
 .dangerIcon {
@@ -205,407 +203,183 @@
   color:        var(--danger);
 }
 
-.actionTitle {
-  font-size:   14px;
-  font-weight: 500;
-  color:       var(--text-primary);
-}
+.actionTitle { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+.actionDesc  { font-size: 12px; color: var(--text-muted); }
 
-.actionDesc {
-  font-size: 12px;
-  color:     var(--text-muted);
-  margin-top: 1px;
+// ─── Plan / Subscription ──────────────────────────────────────────────────────
+.planSection { display: flex; flex-direction: column; gap: 10px; }
+.planCard {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 16px; background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary));
+  border: 1px solid var(--border-color); border-radius: var(--radius-lg); cursor: pointer; transition: all 0.25s ease;
+  &:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 }
+.planInfo { display: flex; align-items: center; gap: 12px; }
+.planIcon { 
+  width: 38px; height: 38px; border-radius: var(--radius-md); background: var(--primary-light); color: var(--primary);
+  display: flex; align-items: center; justify-content: center; 
+}
+.planTitle { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.planDesc  { font-size: 12px; color: var(--text-muted); }
 
-// ─── Connect Grid ─────────────────────────────────────────────────────────────
+// ─── FIX 1: Connect Grid (Row Layout & Logo Branding) ─────────────────────────
 .connectGrid {
-  display:        flex;
-  flex-direction: column;
-  gap:            10px;
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       12px;
 }
 
 .connectCard {
   display:         flex;
   align-items:     center;
-  gap:             14px;
-  padding:         14px 16px;
+  gap:             10px;
+  padding:          12px 14px;
   background:      var(--bg-tertiary);
   border:          1px solid var(--border-color);
   border-radius:   var(--radius-md);
-  text-decoration: none;
-  transition:      border-color var(--transition-fast),
-                   background   var(--transition-fast),
-                   transform    var(--transition-fast);
+  text-decoration: none !important; // FIX 1: Remove underline
+  flex:            1 1 calc(33.33% - 8px); 
+  min-width:       160px;
+  transition:      all var(--transition-fast);
 
   &:hover {
     border-color: var(--border-hover);
     background:   var(--bg-hover);
     transform:    translateY(-1px);
-    text-decoration: none;
-
+    text-decoration: none !important; // FIX 1: Ensure no underline on hover
     .connectArrow { transform: translateX(3px); }
   }
+
+  @media (max-width: 600px) { flex: 1 1 100%; }
 }
 
 .connectIcon {
-  width:           40px;
-  height:          40px;
+  width:            32px; // FIX 1: Standardized size
+  height:           32px;
+  border-radius:   8px;   // Standard brand logo radius
+  display:          flex;
+  align-items:     center;
+  justify-content: center;
+  flex-shrink:      0;
+  box-shadow:      0 2px 4px rgba(0,0,0,0.05);
+
+  svg { width: 18px; height: 18px; } // Standard icon scaling
+}
+
+.emailIcon { background: #0061ff; color: #fff; }     // Solid brand color
+.githubIcon { background: #24292e; color: #fff; }    // GitHub Black
+.linkedinIcon { background: #0077b5; color: #fff; }  // LinkedIn Blue
+
+.connectInfo { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.connectLabel { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.connectSub   { font-size: 11px; color: var(--text-muted); }
+.connectArrow { color: var(--text-muted); transition: transform 0.2s; }
+
+// ─── FIX 2 & 3: Sign Out Row (Full Area Click + Modal Confirmation) ───────────
+.signOutContainer {
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.signOutCard {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:          0; // Remove padding so button fills area
   border-radius:   var(--radius-md);
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  flex-shrink:     0;
-}
-
-.emailIcon {
-  background: #eff6ff;
-  color:      #2563eb;
-
-  [data-theme="dark"] & {
-    background: rgba(37, 99, 235, 0.15);
-    color:      #60a5fa;
-  }
-}
-
-.githubIcon {
-  background: var(--bg-secondary);
-  border:     1px solid var(--border-color);
-  color:      var(--text-primary);
-}
-
-.connectInfo {
-  display:        flex;
-  flex-direction: column;
-  gap:            2px;
-  flex:           1;
-  min-width:      0;
-}
-
-.connectLabel {
-  font-size:   14px;
-  font-weight: 500;
-  color:       var(--text-primary);
-}
-
-.connectSub {
-  font-size: 12px;
-  color:     var(--text-muted);
-}
-
-.connectArrow {
-  color:      var(--text-muted);
-  flex-shrink: 0;
-  transition: transform var(--transition-fast);
-}
-
-// ─── Sign Out Row ─────────────────────────────────────────────────────────────
-.signOutRow {
-  display:         flex;
-  justify-content: center;
-  padding-top:     4px;
-  border-top:      1px solid var(--border-color);
-}
-
-// ─── Confirm Dialog ───────────────────────────────────────────────────────────
-.dialogBackdrop {
-  position:        fixed;
-  inset:           0;
-  background:      rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  z-index:         500;
-  padding:         16px;
-}
-
-.dialog {
-  background:     var(--bg-secondary);
-  border:         1px solid var(--border-color);
-  border-radius:  var(--radius-xl);
-  padding:        28px 24px;
-  max-width:      360px;
-  width:          100%;
-  box-shadow:     var(--shadow-xl);
-  display:        flex;
-  flex-direction: column;
-  align-items:    center;
-  gap:            16px;
-  text-align:     center;
-}
-
-.dialogIcon {
-  width:           48px;
-  height:          48px;
-  border-radius:   50%;
-  background:      #fef3c7;
-  color:           #d97706;
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-
-  [data-theme="dark"] & {
-    background: rgba(217, 119, 6, 0.15);
-    color:      #fbbf24;
-  }
-}
-
-.dialogMessage {
-  font-size:   14px;
-  color:       var(--text-secondary);
-  line-height: 1.6;
-}
-
-.dialogActions {
-  display: flex;
-  gap:     10px;
-  width:   100%;
-  justify-content: center;
-}
-
-// ─── Toast ────────────────────────────────────────────────────────────────────
-.toast {
-  position:      fixed;
-  bottom:        28px;
-  left:          50%;
-  transform:     translateX(-50%);
-  display:       flex;
-  align-items:   center;
-  gap:           8px;
-  padding:       12px 20px;
-  border-radius: var(--radius-full);
-  font-size:     13px;
-  font-weight:   500;
-  white-space:   nowrap;
-  box-shadow:    0 8px 24px rgba(0,0,0,0.18);
-  z-index:       600;
-  pointer-events: none;
-}
-
-.toast_success {
-  background: #166534;
-  color:      #fff;
-}
-
-.toast_error {
-  background: var(--danger);
-  color:      #fff;
-}
-
-.toast_info {
-  background: #1f2937;
-  color:      #fff;
-
-  [data-theme="dark"] & {
-    background: #fff;
-    color:      #1f2937;
-  }
-}
-
-// ─── Mobile adjustments ───────────────────────────────────────────────────────
-@media (max-width: 600px) {
-  .card {
-    padding: 20px 16px;
-    gap:     22px;
-  }
-
-  .avatarSection { gap: 14px; }
-  .avatar        { width: 56px; height: 56px; font-size: 18px; }
-  .name          { font-size: 17px; }
-}
-
-// ─── Name Row (inline edit) ───────────────────────────────────────────────────
-.nameRow {
-  display:     flex;
-  align-items: center;
-  gap:         8px;
-  min-height:  32px;
-}
-
-// Pencil icon button — only visible on hover of .identity
-.nameEditBtn {
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  width:           28px;
-  height:          28px;
-  border-radius:   var(--radius-sm);
-  color:           var(--text-muted);
-  background:      transparent;
-  border:          none;
+  background:      var(--bg-tertiary);
+  border:          1px solid var(--border-color);
   cursor:          pointer;
-  transition:      background var(--transition-fast),
-                   color      var(--transition-fast),
-                   opacity    var(--transition-fast);
-  opacity:         0;
-  flex-shrink:     0;
-
-  .identity:hover & { opacity: 1; }
+  overflow:        hidden;
+  transition:      all 0.2s ease;
 
   &:hover {
-    background: var(--bg-hover);
-    color:      var(--primary);
+    background:   rgba(229, 62, 62, 0.05);
+    border-color: rgba(229, 62, 62, 0.2);
+    
+    .signOutBtn { color: #dc2626; }
   }
 }
 
-// Inline edit wrapper
-.nameEditWrap {
-  display:     flex;
-  align-items: center;
-  gap:         6px;
-  width:       100%;
-}
-
-.nameInput {
-  flex:          1;
-  font-size:     20px;
-  font-weight:   700;
-  color:         var(--text-primary);
-  background:    var(--bg-tertiary);
-  border:        1.5px solid var(--primary);
-  border-radius: var(--radius-md);
-  padding:       4px 10px;
-  outline:       none;
-  line-height:   1.2;
-  max-width:     260px;
-  box-shadow:    0 0 0 3px rgba(16, 163, 127, 0.12);
-
-  &:disabled { opacity: 0.6; }
-}
-
-.nameSaveBtn,
-.nameCancelBtn {
+.signOutBtn {
+  width:           100%;  // FIX 2: Occupy all area
+  height:          100%;
+  padding:         16px;
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           28px;
-  height:          28px;
-  border-radius:   var(--radius-sm);
-  border:          none;
-  cursor:          pointer;
-  transition:      background var(--transition-fast);
-  flex-shrink:     0;
-
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
-}
-
-.nameSaveBtn {
-  background: var(--primary);
-  color:      #fff;
-  &:hover:not(:disabled) { background: var(--primary-dark); }
-}
-
-.nameCancelBtn {
-  background: var(--bg-tertiary);
-  color:      var(--text-secondary);
-  border:     1px solid var(--border-color);
-  &:hover:not(:disabled) { background: var(--bg-hover); }
-}
-
-// ─── Dialog — wider variant for forms ────────────────────────────────────────
-.dialogWide {
-  max-width: 420px;
-  text-align: left;
-}
-
-.dialogHeader {
-  display:         flex;
-  align-items:     center;
-  justify-content: space-between;
-  margin-bottom:   20px;
-}
-
-.dialogTitle {
-  font-size:   16px;
-  font-weight: 600;
-  color:       var(--text-primary);
-}
-
-.dialogCloseBtn {
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  width:           30px;
-  height:          30px;
-  border-radius:   var(--radius-sm);
-  border:          none;
+  gap:             8px;
   background:      transparent;
-  color:           var(--text-muted);
+  border:          none;
+  color:           var(--danger);
+  font-size:       14px;
+  font-weight:     600;
   cursor:          pointer;
-  transition:      background var(--transition-fast);
-
-  &:hover { background: var(--bg-hover); color: var(--text-primary); }
+  transition:      color 0.2s ease;
+  pointer-events:  none; // Card handles the click
 }
 
-.dialogIconDanger {
-  background: rgba(229, 62, 62, 0.1) !important;
-  color:      var(--danger) !important;
+// ─── Modal / Dialog Styles (Keep Existing) ────────────────────────────────────
+.dialogBackdrop {
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; z-index: 500; padding: 16px;
 }
-
-// ─── Password Form ────────────────────────────────────────────────────────────
-.passwordForm {
-  display:        flex;
-  flex-direction: column;
-  gap:            14px;
+.dialog {
+  background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-xl);
+  padding: 28px 24px; max-width: 360px; width: 100%; box-shadow: var(--shadow-xl);
+  display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
 }
-
-.formField {
-  display:        flex;
-  flex-direction: column;
-  gap:            6px;
+.dialogWide { max-width: 420px; text-align: left; }
+.dialogHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.dialogTitle { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+.dialogCloseBtn { border: none; background: transparent; color: var(--text-muted); cursor: pointer; }
+.dialogIcon { 
+  width: 48px; height: 48px; border-radius: 50%; background: #fef3c7; color: #d97706;
+  display: flex; align-items: center; justify-content: center; 
 }
+.dialogIconDanger { background: rgba(229, 62, 62, 0.1) !important; color: var(--danger) !important; }
+.dialogActions { display: flex; gap: 10px; width: 100%; justify-content: center; }
+.dialogMessage { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-.formLabel {
-  font-size:   12px;
-  font-weight: 500;
-  color:       var(--text-secondary);
-}
-
-.formInputWrap {
-  position: relative;
-  display:  flex;
-}
-
-.formIcon {
-  position:    absolute;
-  left:        12px;
-  top:         50%;
-  transform:   translateY(-50%);
-  color:       var(--text-muted);
-  pointer-events: none;
-}
-
+// ─── Forms & UI Elements (Keep Existing) ──────────────────────────────────────
+.passwordForm { display: flex; flex-direction: column; gap: 14px; }
+.formField { display: flex; flex-direction: column; gap: 6px; }
+.formLabel { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
+.formInputWrap { position: relative; display: flex; }
+.formIcon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
 .formInput {
-  width:         100%;
-  padding:       9px 12px 9px 36px;
-  font-size:     14px;
-  font-family:   inherit;
-  color:         var(--text-primary);
-  background:    var(--bg-secondary);
-  border:        1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  outline:       none;
-  transition:    border-color var(--transition-fast), box-shadow var(--transition-fast);
-
-  &::placeholder { color: var(--text-muted); }
-
-  &:focus {
-    border-color: var(--primary);
-    box-shadow:   0 0 0 3px rgba(16, 163, 127, 0.12);
-  }
-
-  &:disabled { opacity: 0.55; cursor: not-allowed; }
+  width: 100%; padding: 9px 12px 9px 36px; font-size: 14px; color: var(--text-primary);
+  background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); outline: none;
+  &:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.12); }
 }
-
 .formError {
-  display:       flex;
-  align-items:   center;
-  gap:           7px;
-  padding:       9px 12px;
-  background:    var(--danger-light);
-  border:        1px solid rgba(229, 62, 62, 0.2);
-  border-radius: var(--radius-md);
-  font-size:     13px;
-  color:         var(--danger);
-  svg { flex-shrink: 0; }
+  display: flex; align-items: center; gap: 7px; padding: 9px 12px; background: var(--danger-light);
+  border: 1px solid rgba(229, 62, 62, 0.2); border-radius: var(--radius-md); font-size: 13px; color: var(--danger);
 }
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: var(--radius-full);
+  font-size: 13px; font-weight: 500; z-index: 600; pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+.toast_success { background: #166534; color: #fff; }
+.toast_error   { background: var(--danger); color: #fff; }
+.toast_info    { background: #1f2937; color: #fff; }
+
+.nameRow { display: flex; align-items: center; gap: 8px; min-height: 32px; }
+.nameEditBtn { 
+  opacity: 0; cursor: pointer; background: transparent; border: none; color: var(--text-muted); transition: all 0.2s;
+  .identity:hover & { opacity: 1; }
+  &:hover { color: var(--primary); }
+}
+.nameEditWrap { display: flex; align-items: center; gap: 6px; width: 100%; }
+.nameInput {
+  flex: 1; font-size: 20px; font-weight: 700; color: var(--text-primary); background: var(--bg-tertiary);
+  border: 1.5px solid var(--primary); border-radius: var(--radius-md); padding: 4px 10px; outline: none;
+}
+.nameSaveBtn, .nameCancelBtn { width: 28px; height: 28px; border-radius: 4px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.nameSaveBtn { background: var(--primary); color: #fff; }
+.nameCancelBtn { background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-secondary); }
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
