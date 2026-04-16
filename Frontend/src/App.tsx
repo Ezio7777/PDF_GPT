@@ -1,19 +1,18 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAppSelector } from '@/store/hooks'
-import Home    from '@/pages/Home'
-import Login   from '@/pages/Login'
-import Signup  from '@/pages/Signup'
-import Profile from '@/pages/Profile'
+import Home         from '@/pages/Home'
+import Login        from '@/pages/Login'
+import Signup       from '@/pages/Signup'
+import Profile      from '@/pages/Profile'
+import Subscription from '@/pages/Subscription'
 
-// Already logged in → go home
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { token } = useAppSelector(s => s.auth)
   if (token) return <Navigate to="/" replace />
   return <>{children}</>
 }
 
-// Must be logged in
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { token } = useAppSelector(s => s.auth)
   if (!token) return <Navigate to="/login" replace />
@@ -28,10 +27,10 @@ const App: React.FC = () => (
       <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
 
       {/* Protected */}
-      <Route path="/"        element={<ProtectedRoute><Home    /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/"             element={<ProtectedRoute><Home         /></ProtectedRoute>} />
+      <Route path="/profile"      element={<ProtectedRoute><Profile      /></ProtectedRoute>} />
+      <Route path="/subscription" element={<ProtectedRoute><Subscription /></ProtectedRoute>} />
 
-      {/* Catch-all */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </BrowserRouter>
