@@ -38,10 +38,17 @@ const Login: React.FC = () => {
       }))
       navigate('/', { replace: true })
     } catch (err: unknown) {
-      const axiosErr = err as { response?: { data?: { detail?: string } } }
-      setError(axiosErr?.response?.data?.detail ?? 'Invalid email or password.')
+      console.error("Login Error Object:", err); 
+      
+      const axiosErr = err as { response?: { data?: any } };
+      const errorMessage = 
+        axiosErr?.response?.data?.detail || 
+        axiosErr?.response?.data?.msg || 
+        'This account does not exist or credentials are wrong.';
+      
+      setError(errorMessage);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 

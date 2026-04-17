@@ -21,15 +21,16 @@ api.interceptors.request.use(
 
 // ─── Response Interceptor: Handle 401 ───────────────────────────────────────
 api.interceptors.response.use(
-  response => response,
-  error => {
+  (response) => response,
+  (error) => {
     if (error.response?.status === 401) {
-      store.dispatch(logout())
-      // Navigate to root — the app router will show the auth modal
-      window.location.href = '/'
+      if (!window.location.pathname.includes('/login')) {
+        localStorage.clear();
+        window.location.href = '/login';
+      }
     }
-    return Promise.reject(error)
-  },
-)
+    return Promise.reject(error);
+  }
+);
 
 export default api

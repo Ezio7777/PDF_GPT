@@ -70,37 +70,14 @@
   gap:             4px;
 }
 
-.name {
-  font-size:   20px;
-  font-weight: 700;
-  color:       var(--text-primary);
-  line-height: 1.2;
-}
-
-.email {
-  font-size: 13px;
-  color:     var(--text-muted);
-}
+.name { font-size: 20px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
+.email { font-size: 13px; color: var(--text-muted); }
 
 .badge {
-  display:        inline-flex;
-  align-items:    center;
-  gap:            5px;
-  font-size:      11px;
-  font-weight:    500;
-  color:          #166534;
-  background:     #dcfce7;
-  padding:        3px 9px;
-  border-radius: var(--radius-full);
-  width:          fit-content;
-
+  display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500;
+  color: #166534; background: #dcfce7; padding: 3px 9px; border-radius: var(--radius-full); width: fit-content;
   svg { color: #16a34a; }
-
-  [data-theme="dark"] & {
-    background: rgba(22, 163, 74, 0.15);
-    color:      #4ade80;
-    svg { color: #4ade80; }
-  }
+  [data-theme="dark"] & { background: rgba(22, 163, 74, 0.15); color: #4ade80; svg { color: #4ade80; } }
 }
 
 // ─── Info Grid ────────────────────────────────────────────────────────────────
@@ -108,101 +85,37 @@
   display:                grid;
   grid-template-columns: 1fr 1fr;
   gap:                    12px;
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
 }
-
 .infoCard {
-  background:    var(--bg-tertiary);
-  border:         1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding:        14px 16px;
-  display:        flex;
-  flex-direction: column;
-  gap:            4px;
+  background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  border-radius: var(--radius-md); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px;
 }
-
-.infoLabel {
-  font-size:      11px;
-  font-weight:    600;
-  color:          var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.infoValue {
-  font-size:      14px;
-  font-weight:    500;
-  color:          var(--text-primary);
-  word-break:     break-all;
-}
+.infoLabel { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.infoValue { font-size: 14px; font-weight: 500; color: var(--text-primary); word-break: break-all; }
 
 // ─── Sections ─────────────────────────────────────────────────────────────────
-.section {
-  display:         flex;
-  flex-direction: column;
-  gap:             10px;
-}
-
+.section { display: flex; flex-direction: column; gap: 10px; }
 .sectionTitle {
-  font-size:      12px;
-  font-weight:    600;
-  color:          var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding-bottom: 2px;
-  border-bottom:  1px solid var(--border-color);
+  font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 0.6px; padding-bottom: 2px; border-bottom: 1px solid var(--border-color);
 }
 
 // ─── Account Action Cards ─────────────────────────────────────────────────────
 .actionCard {
-  display:         flex;
-  align-items:     center;
-  justify-content: space-between;
-  gap:              12px;
-  padding:          14px 16px;
-  background:      var(--bg-tertiary);
-  border:          1px solid var(--border-color);
-  border-radius:   var(--radius-md);
-  transition:      border-color var(--transition-fast);
-
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 16px; background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  border-radius: var(--radius-md); transition: border-color var(--transition-fast);
   &:hover { border-color: var(--border-hover); }
 }
-
-.dangerCard {
-  border-color: rgba(229, 62, 62, 0.15);
-  background:   rgba(229, 62, 62, 0.03);
-  &:hover { border-color: rgba(229, 62, 62, 0.3); }
-}
-
-.actionInfo {
-  display:     flex;
-  align-items: center;
-  gap:         12px;
-  min-width:   0;
-}
-
+.dangerCard { border-color: rgba(229, 62, 62, 0.15); background: rgba(229, 62, 62, 0.03); &:hover { border-color: rgba(229, 62, 62, 0.3); } }
+.actionInfo { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .actionIcon {
-  width:            36px;
-  height:           36px;
-  border-radius:   var(--radius-md);
-  background:      var(--bg-secondary);
-  border:          1px solid var(--border-color);
-  display:          flex;
-  align-items:     center;
-  justify-content: center;
-  color:            var(--text-secondary);
-  flex-shrink:      0;
+  width: 36px; height: 36px; border-radius: var(--radius-md); background: var(--bg-secondary);
+  border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary); flex-shrink: 0;
 }
-
-.dangerIcon {
-  background:   rgba(229, 62, 62, 0.08);
-  border-color: rgba(229, 62, 62, 0.2);
-  color:        var(--danger);
-}
-
+.dangerIcon { background: rgba(229, 62, 62, 0.08); border-color: rgba(229, 62, 62, 0.2); color: var(--danger); }
 .actionTitle { font-size: 14px; font-weight: 500; color: var(--text-primary); }
 .actionDesc  { font-size: 12px; color: var(--text-muted); }
 
@@ -222,11 +135,11 @@
 .planTitle { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 .planDesc  { font-size: 12px; color: var(--text-muted); }
 
-// ─── FIX 1: Connect Grid (Row Layout & Logo Branding) ─────────────────────────
+// ─── FIX: 2x2 Connect Grid (For 4 items) ──────────────────────────────────────
 .connectGrid {
-  display:   flex;
-  flex-wrap: wrap;
-  gap:       12px;
+  display:               grid;
+  grid-template-columns: repeat(2, 1fr); // FIX: 2 Columns strictly
+  gap:                   12px;
 }
 
 .connectCard {
@@ -237,45 +150,43 @@
   background:      var(--bg-tertiary);
   border:          1px solid var(--border-color);
   border-radius:   var(--radius-md);
-  text-decoration: none !important; // FIX 1: Remove underline
-  flex:            1 1 calc(33.33% - 8px); 
-  min-width:       160px;
+  text-decoration: none !important; // FIX: No underline
   transition:      all var(--transition-fast);
 
   &:hover {
     border-color: var(--border-hover);
     background:   var(--bg-hover);
     transform:    translateY(-1px);
-    text-decoration: none !important; // FIX 1: Ensure no underline on hover
+    text-decoration: none !important;
     .connectArrow { transform: translateX(3px); }
   }
 
-  @media (max-width: 600px) { flex: 1 1 100%; }
+  @media (max-width: 480px) { grid-column: span 2; } // Stack on tiny phones
 }
 
 .connectIcon {
-  width:            32px; // FIX 1: Standardized size
+  width:            32px;
   height:           32px;
-  border-radius:   8px;   // Standard brand logo radius
+  border-radius:   8px;
   display:          flex;
   align-items:     center;
   justify-content: center;
   flex-shrink:      0;
   box-shadow:      0 2px 4px rgba(0,0,0,0.05);
-
-  svg { width: 18px; height: 18px; } // Standard icon scaling
+  svg { width: 18px; height: 18px; }
 }
 
-.emailIcon { background: #0061ff; color: #fff; }     // Solid brand color
-.githubIcon { background: #24292e; color: #fff; }    // GitHub Black
-.linkedinIcon { background: #0077b5; color: #fff; }  // LinkedIn Blue
+.emailIcon { background: #0061ff; color: #fff; }
+.githubIcon { background: #24292e; color: #fff; }
+.linkedinIcon { background: #0077b5; color: #fff; }
+.instagramIcon { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); color: #fff; }
 
 .connectInfo { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .connectLabel { font-size: 13px; font-weight: 600; color: var(--text-primary); }
 .connectSub   { font-size: 11px; color: var(--text-muted); }
 .connectArrow { color: var(--text-muted); transition: transform 0.2s; }
 
-// ─── FIX 2 & 3: Sign Out Row (Full Area Click + Modal Confirmation) ───────────
+// ─── Sign Out (Full Area Click + Confirmed Logic) ────────────────────────────
 .signOutContainer {
   margin-top: 10px;
   padding-top: 20px;
@@ -286,7 +197,7 @@
   display:         flex;
   align-items:     center;
   justify-content: center;
-  padding:          0; // Remove padding so button fills area
+  padding:          0;
   border-radius:   var(--radius-md);
   background:      var(--bg-tertiary);
   border:          1px solid var(--border-color);
@@ -297,13 +208,12 @@
   &:hover {
     background:   rgba(229, 62, 62, 0.05);
     border-color: rgba(229, 62, 62, 0.2);
-    
     .signOutBtn { color: #dc2626; }
   }
 }
 
 .signOutBtn {
-  width:           100%;  // FIX 2: Occupy all area
+  width:           100%;
   height:          100%;
   padding:         16px;
   display:         flex;
@@ -320,43 +230,113 @@
   pointer-events:  none; // Card handles the click
 }
 
-// ─── Modal / Dialog Styles (Keep Existing) ────────────────────────────────────
+// ─── Revamped Beautiful Reset Modal ───────────────────────────────────────────
 .dialogBackdrop {
-  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(4px);
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px);
   display: flex; align-items: center; justify-content: center; z-index: 500; padding: 16px;
 }
+
 .dialog {
   background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-xl);
-  padding: 28px 24px; max-width: 360px; width: 100%; box-shadow: var(--shadow-xl);
+  padding: 24px; max-width: 360px; width: 100%; box-shadow: var(--shadow-xl);
   display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
 }
-.dialogWide { max-width: 420px; text-align: left; }
-.dialogHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.dialogTitle { font-size: 16px; font-weight: 600; color: var(--text-primary); }
-.dialogCloseBtn { border: none; background: transparent; color: var(--text-muted); cursor: pointer; }
-.dialogIcon { 
-  width: 48px; height: 48px; border-radius: 50%; background: #fef3c7; color: #d97706;
-  display: flex; align-items: center; justify-content: center; 
-}
-.dialogIconDanger { background: rgba(229, 62, 62, 0.1) !important; color: var(--danger) !important; }
-.dialogActions { display: flex; gap: 10px; width: 100%; justify-content: center; }
-.dialogMessage { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-// ─── Forms & UI Elements (Keep Existing) ──────────────────────────────────────
-.passwordForm { display: flex; flex-direction: column; gap: 14px; }
-.formField { display: flex; flex-direction: column; gap: 6px; }
-.formLabel { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
-.formInputWrap { position: relative; display: flex; }
-.formIcon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+.dialogWide { max-width: 440px; text-align: left; align-items: flex-start; }
+
+.dialogHeader { display: flex; align-items: flex-start; justify-content: space-between; width: 100%; margin-bottom: 4px; }
+
+.headerTitleWrap { display: flex; align-items: center; gap: 14px; }
+
+.headerIcon {
+  width: 42px; height: 42px; border-radius: 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color);
+  display: flex; align-items: center; justify-content: center; color: var(--primary);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+// ─── Dialog Styles ──────────────────────────────────────────
+.dialogIcon { 
+  width: 44px; 
+  height: 44px; 
+  border-radius: 12px; 
+  background: var(--bg-tertiary); 
+  border: 1px solid var(--border-color);
+  color: #d97706; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin-bottom: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+
+  svg { width: 22px; height: 22px; }
+}
+
+.dialogIconDanger { 
+  background: rgba(229, 62, 62, 0.1) !important; 
+  border-color: rgba(229, 62, 62, 0.2) !important;
+  color: var(--danger) !important; 
+}
+
+.dialogTitle { 
+  font-size: 18px; 
+  font-weight: 700; 
+  color: var(--text-primary); 
+  margin-top: 4px;
+}
+
+.dialogMessage { 
+  font-size: 14px; 
+  color: var(--text-secondary); 
+  line-height: 1.6; 
+  margin-bottom: 8px;
+}
+
+.dialogActions { 
+  display: flex; 
+  gap: 12px; 
+  width: 100%; 
+  justify-content: center;
+  margin-top: 10px;
+
+  button {
+    flex: 1;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+  }
+}
+
+.dialogSubtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+.dialogCloseBtn { 
+  border: none; background: transparent; color: var(--text-muted); cursor: pointer; padding: 6px; 
+  border-radius: 8px; transition: background 0.2s;
+  &:hover { background: var(--bg-hover); color: var(--text-primary); } 
+}
+
+.passwordForm { display: flex; flex-direction: column; gap: 18px; width: 100%; margin-top: 10px; }
+
+.formField { display: flex; flex-direction: column; gap: 8px; }
+.formLabel { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+
 .formInput {
-  width: 100%; padding: 9px 12px 9px 36px; font-size: 14px; color: var(--text-primary);
-  background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); outline: none;
-  &:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.12); }
+  width: 100%; padding: 12px 12px 12px 38px; font-size: 14px; color: var(--text-primary);
+  background: var(--bg-tertiary); border: 1.5px solid var(--border-color); border-radius: 12px; 
+  outline: none; transition: all 0.2s;
+  &::placeholder { color: var(--text-muted); opacity: 0.5; }
+  &:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(16, 163, 127, 0.1); background: var(--bg-secondary); }
 }
+
+.formInputWrap { position: relative; display: flex; width: 100%; }
+.formIcon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+
 .formError {
-  display: flex; align-items: center; gap: 7px; padding: 9px 12px; background: var(--danger-light);
-  border: 1px solid rgba(229, 62, 62, 0.2); border-radius: var(--radius-md); font-size: 13px; color: var(--danger);
+  display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: rgba(229, 62, 62, 0.08);
+  border: 1px solid rgba(229, 62, 62, 0.2); border-radius: 12px; font-size: 13px; color: var(--danger);
 }
+
+.dialogActions { display: flex; gap: 12px; width: 100%; margin-top: 10px; }
+
+// Toast and Name edit logic remain the same
 .toast {
   position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
   display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: var(--radius-full);
