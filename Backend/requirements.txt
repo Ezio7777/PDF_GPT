@@ -1,15 +1,38 @@
+# Web Server & Framework
 fastapi
-uvicorn
+uvicorn[standard]
+python-multipart
+pydantic-settings
+
+# Database & Storage
 pymongo
-passlib[bcrypt]
-python-jose
+dnspython
+langchain-mongodb
+
+# AI & LLM Orchestration
 langchain
 langchain-community
 langchain-core
 langchain-text-splitters
-langchain-huggingface
+langgraph
+
+# Google AI
+langchain-google-genai
+google-genai
+
+# Embeddings & Vector Store
 sentence-transformers
+langchain-huggingface
 faiss-cpu
+numpy
+torch
+
+# Authentication & Security
+passlib[bcrypt]
+bcrypt==4.0.1
+python-jose[cryptography]
+
+# Utilities
 python-dotenv
 pypdf
-python-multipart
+httpx
