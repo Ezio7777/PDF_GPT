@@ -1,20 +1,18 @@
 from langchain_mongodb import MongoDBAtlasVectorSearch
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from app.db.database import vector_col
 
-# Module-level cache — model loads once on first use, not at import time
 _embeddings = None
 
 def get_embeddings():
     global _embeddings
     if _embeddings is None:
-        _embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        _embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     return _embeddings
 
 
 def ask_ai(question, chat_id):
-    embeddings = get_embeddings()   # ← cached, won't re-download
+    embeddings = get_embeddings()
 
     vector_store = MongoDBAtlasVectorSearch(
         collection=vector_col,
