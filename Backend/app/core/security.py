@@ -33,7 +33,7 @@ def create_token(user_id: str):
     try:
         payload = {
             "user_id": user_id,
-            "exp": datetime.utcnow() + timedelta(hours=2)
+            "exp": datetime.utcnow() + timedelta(days=7)
         }
         return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
     except Exception as e:

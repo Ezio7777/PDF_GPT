@@ -7,6 +7,7 @@ import chatService from '@/services/chatService'
 import styles from './Sidebar.module.scss'
 
 const Sidebar: React.FC = () => {
+  const version = import.meta.env.VITE_APP_VERSION?.trim() || '1.0';
   const dispatch  = useAppDispatch()
   const navigate  = useNavigate()
   const { chats, currentChatId, loading } = useAppSelector(s => s.chat)
@@ -181,7 +182,7 @@ const Sidebar: React.FC = () => {
           {!sidebarCollapsed && (
             <div className={styles.footerBranding}>
               <span>PDF GPT</span>
-              <span>v1.0</span>
+              <span>v {version}</span>
             </div>
           )}
         </div>
