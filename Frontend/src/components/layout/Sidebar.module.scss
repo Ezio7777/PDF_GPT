@@ -45,14 +45,15 @@
 // ─── Mobile: hidden off-screen by default, slides in as overlay ───────────────
 @media (max-width: 767px) {
   .sidebar {
-    position:  fixed;
+   position:  fixed;
     top:       var(--header-height);
     left:      0;
-    bottom:    0;
-    width:     var(--sidebar-width) !important;   // always full on mobile
+    height:    calc(100% - var(--header-height)) !important; 
+    width:     var(--sidebar-width) !important;
     transform: translateX(-100%);
     z-index:   300;
     box-shadow: none;
+    padding-bottom: env(safe-area-inset-bottom, 10px);
   }
 
   .mobileOpen {

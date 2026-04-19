@@ -12,6 +12,7 @@
 .aiAvatar,
 .userAvatar {
   margin-top: 18px;
+  background: #3a3a3a;
   width:           32px;
   height:          32px;
   border-radius:   50%;
@@ -50,7 +51,11 @@
   letter-spacing: 0.4px;
   padding:     0 2px;
 
-  .userRow & { text-align: right; }
+  .userRow & { 
+    text-align: left;
+    display: block; 
+    width: 100%;
+  }
 }
 
 // ─── Bubbles ──────────────────────────────────────────────────────────────────
