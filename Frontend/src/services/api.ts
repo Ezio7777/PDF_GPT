@@ -10,11 +10,18 @@ const api = axios.create({
 // ─── Request Interceptor: Attach JWT ────────────────────────────────────────
 api.interceptors.request.use(
   config => {
-    const token = store.getState().auth.token
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+    let token = store.getState().auth.token;
+
+    if (!token) {
+      token = localStorage.getItem('pdf_gpt_token');
     }
-    return config
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      console.warn("No token found in Redux or LocalStorage for request:", config.url);
+    }
+    return config;
   },
   error => Promise.reject(error),
 )
@@ -25,8 +32,8 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       if (!window.location.pathname.includes('/login')) {
-        localStorage.clear();
-        window.location.href = '/login';
+        // localStorage.clear();
+        // window.location.href = '/login';
       }
     }
     return Promise.reject(error);
